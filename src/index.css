@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+@theme {
+  /* Azul marino RadiOferta */
+  --color-marino-50: #e6ecf7;
+  --color-marino-100: #c0d0ec;
+  --color-marino-200: #8aaad9;
+  --color-marino-500: #002B6B;
+  --color-marino-600: #002059;
+  --color-marino-700: #001540;
+
+  /* Naranja RadiOferta */
+  --color-oferta-50: #fff3e6;
+  --color-oferta-100: #ffd9b3;
+  --color-oferta-200: #ffb870;
+  --color-oferta-500: #FF6A00;
+  --color-oferta-600: #e05e00;
+  --color-oferta-700: #b34a00;
+}
+
+/* ── Fondo global con degradado suave ── */
+body {
+  min-height: 100vh;
+  background: linear-gradient(
+    160deg,
+    #e8edf7 0%,    /* azul marino muy claro */
+    #f5f5f5 40%,   /* gris neutro */
+    #fff4ec 100%   /* naranja muy claro */
+  );
+  background-attachment: fixed; /* el degradado no se mueve al hacer scroll */
+}

@@ -1,0 +1,415 @@
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { getUsuarioPublico, getAnunciosUsuario, editarPerfil } from "../services/usuarioService";
+import { useUsuario } from "../context/UsuarioContext";
+import { deleteAnuncio } from "../services/anuncioServices";
+import AnuncioCard from "../components/AnuncioCard";
+import { User, Calendar, Tag, Star } from "lucide-react";
+import { getReseñas, crearReseña, borrarReseña } from "../services/reseñaService";
+import BotonVolver from "../components/BotonVolver";
+import Footer from "../components/Footer"
+
+// muestra estrellas
+function Estrellas({ puntuacion, tamaño = "w-4 h-4" }) {
+    return (
+        <div className="flex gap-0.5">
+            {[1, 2, 3, 4, 5].map((i) => (
+                <Star
+                    key={i}
+                    className={tamaño}
+                    fill={i <= puntuacion ? "#FBBF24" : "none"}
+                    stroke={i <= puntuacion ? "#FBBF24" : "#D1D5DB"}
+                />
+            ))}
+        </div>
+    );
+}
+
+// selecciina estrellas
+function SelectorEstrellas({ valor, onChange }) {
+    const [hover, setHover] = useState(0);
+    return (
+        <div className="flex gap-1">
+            {[1, 2, 3, 4, 5].map((i) => (
+                <Star
+                    key={i}
+                    className="w-7 h-7 cursor-pointer transition-transform hover:scale-110"
+                    fill={i <= (hover || valor) ? "#FBBF24" : "none"}
+                    stroke={i <= (hover || valor) ? "#FBBF24" : "#D1D5DB"}
+                    onClick={() => onChange(i)}
+                    onMouseEnter={() => setHover(i)}
+                    onMouseLeave={() => setHover(0)}
+                />
+            ))}
+        </div>
+    );
+}
+
+export default function PerfilUsuario() {
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const { usuario } = useUsuario();
+
+    const [perfil, setPerfil] = useState(null);
+    const [anuncios, setAnuncios] = useState([]);
+    const [error, setError] = useState(null);
+    const [cargando, setCargando] = useState(true);
+
+    const [reseñas, setReseñas] = useState([]);
+    const [puntuacion, setPuntuacion] = useState(0);
+    const [comentario, setComentario] = useState("");
+    const [enviando, setEnviando] = useState(false);
+    const [errorReseña, setErrorReseña] = useState(null);
+
+    const [panelAbierto, setPanelAbierto] = useState(false);
+
+    const esPropietario = usuario && usuario.id === Number(id);
+    const [editandoPerfil, setEditandoPerfil] = useState(false);
+    const [formPerfil, setFormPerfil] = useState({
+        descripcion: "",
+        indicativo: "",
+        localizacion: "",
+        mostrarEmail: false,
+    });
+    const [guardando, setGuardando] = useState(false);
+    const [errorPerfil, setErrorPerfil] = useState(null);
+
+    useEffect(() => {
+        const cargar = async () => {
+            try {
+                const [datosPerfil, datosAnuncios, datosReseñas] = await Promise.all([
+                    getUsuarioPublico(id),
+                    getAnunciosUsuario(id),
+                    getReseñas(id)
+                ]);
+                setPerfil(datosPerfil);
+                setFormPerfil({
+                    descripcion: datosPerfil.descripcion || "",
+                    indicativo: datosPerfil.indicativo || "",
+                    localizacion: datosPerfil.localizacion || "",
+                    mostrarEmail: datosPerfil.email !== null && datosPerfil.email !== undefined,
+                });
+                setAnuncios(datosAnuncios);
+                setReseñas(datosReseñas);
+            } catch {
+                setError("No se pudo cargar el perfil.");
+            } finally {
+                setCargando(false);
+            }
+        };
+        cargar();
+    }, [id]);
+
+    const handleDelete = async (anuncioId) => {
+        if (window.confirm("¿Seguro que quieres borrar este anuncio?")) {
+            try {
+                await deleteAnuncio(anuncioId);
+                setAnuncios(prev => prev.filter(a => a.id !== anuncioId));
+            } catch {
+                alert("Error al borrar el anuncio");
+            }
+        }
+    };
+
+    const handleBorrarReseña = async (reseñaId) => {
+        if (window.confirm("¿Seguro que quieres borrar esta reseña?")) {
+            try {
+                await borrarReseña(reseñaId);
+                const reseñasActualizadas = await getReseñas(id);
+                setReseñas(reseñasActualizadas);
+                const perfilActualizado = await getUsuarioPublico(id);
+                setPerfil(perfilActualizado);
+            } catch {
+                alert("Error al borrar la reseña");
+            }
+        }
+    };
+
+    const handleGuardarPerfil = async () => {
+        setGuardando(true);
+        setErrorPerfil(null);
+        try {
+            const actualizado = await editarPerfil(formPerfil);
+            setPerfil(actualizado);
+            setEditandoPerfil(false);
+        } catch (e) {
+            setErrorPerfil(e.message);
+        } finally {
+            setGuardando(false);
+        }
+    };
+
+    const puedeReseñar = usuario && usuario.id !== Number(id);
+
+    if (cargando) return (
+        <div className="min-h-screen bg-transparent flex items-center justify-center text-gray-400">
+            Cargando...
+        </div>
+    );
+
+    if (error) return (
+        <div className="min-h-screen bg-transparent flex flex-col items-center justify-center text-red-400 gap-4">
+            <p>{error}</p>
+            <button onClick={() => navigate("/")} className="text-oferta-600 underline text-sm">
+                Volver a los anuncios
+            </button>
+        </div>
+    );
+
+    return (
+        <div className="min-h-screen bg-transparent flex flex-col">
+
+            {/* cabecera */}
+            <header className="bg-white border-b border-gray-100 sticky top-0 z-10 shadow-sm">
+                <div className="max-w-5xl mx-auto px-4 py-4 flex items-center gap-3">
+                    <BotonVolver />
+                    <h1 className="text-xl font-bold text-oferta-600">Perfil del vendedor</h1>
+                </div>
+            </header>
+
+            <main className="max-w-5xl mx-auto px-4 py-8 space-y-8 flex-1 w-full">
+
+                {/* perfil */}
+                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex items-center gap-6">
+
+                    {/* avatar con inicial del nombre */}
+                    <div className="w-16 h-16 rounded-full bg-oferta-100 flex items-center justify-center shrink-0">
+                        <span className="text-2xl font-bold text-oferta-600">
+                            {perfil.nombre.charAt(0).toUpperCase()}
+                        </span>
+                    </div>
+
+                    {/* datos usuario */}
+                    <div className="flex flex-col gap-1">
+                        <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
+                            <User className="w-4 h-4 text-oferta-500" />
+                            {perfil.nombre}
+                        </h2>
+                        {perfil.fechaRegistro && (
+                            <p className="text-sm text-gray-400 flex items-center gap-2">
+                                <Calendar className="w-4 h-4" />
+                                Miembro desde {perfil.fechaRegistro}
+                            </p>
+                        )}
+                        <p className="text-sm text-gray-400 flex items-center gap-2">
+                            <Tag className="w-4 h-4" />
+                            {anuncios.length} anuncio{anuncios.length !== 1 ? "s" : ""} publicado{anuncios.length !== 1 ? "s" : ""}
+                        </p>
+                        {perfil.mediaEstrellas != null ? (
+                            <div className="flex items-center gap-2 mt-1">
+                                <Estrellas puntuacion={Math.round(perfil.mediaEstrellas)} />
+                                <span className="text-sm text-gray-500">
+                                    {perfil.mediaEstrellas.toFixed(1)} · {perfil.totalReseñas} reseña{perfil.totalReseñas !== 1 ? "s" : ""}
+                                </span>
+                            </div>
+
+                        ) : (
+                            <p className="text-sm text-gray-400 mt-1">Sin reseñas aún</p>
+                        )}
+                        {/* campos nuevos del perfil */}
+                        {perfil.indicativo && (
+                            <p className="text-sm text-gray-500">📡 {perfil.indicativo}</p>
+                        )}
+                        {perfil.localizacion && (
+                            <p className="text-sm text-gray-500">📍 {perfil.localizacion}</p>
+                        )}
+                        {perfil.email && (
+                            <p className="text-sm text-gray-500">✉️ {perfil.email}</p>
+                        )}
+                        {perfil.descripcion && (
+                            <p className="text-sm text-gray-600 mt-2 italic">{perfil.descripcion}</p>
+                        )}
+
+                        {/* botón editar, solo visible para el propietario */}
+                        {esPropietario && (
+                            <button
+                                onClick={() => setEditandoPerfil(prev => !prev)}
+                                className="mt-3 bg-oferta-500 hover:bg-oferta-600 text-white font-semibold px-3 py-1.5 rounded-lg text-xs transition-colors"
+                            >
+                                {editandoPerfil ? "Cancelar" : "Editar perfil"}
+                            </button>
+                        )}
+
+                        {/* formulario de edición */}
+                        {esPropietario && editandoPerfil && (
+                            <div className="mt-4 flex flex-col gap-3 w-full max-w-md">
+                                <input
+                                    type="text"
+                                    placeholder="Indicativo (ej: EA1ABC)"
+                                    value={formPerfil.indicativo}
+                                    onChange={(e) => setFormPerfil(prev => ({ ...prev, indicativo: e.target.value }))}
+                                    className="border border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-oferta-500"
+                                />
+                                <input
+                                    type="text"
+                                    placeholder="Localización (ej: Madrid)"
+                                    value={formPerfil.localizacion}
+                                    onChange={(e) => setFormPerfil(prev => ({ ...prev, localizacion: e.target.value }))}
+                                    className="border border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-oferta-500"
+                                />
+                                <textarea
+                                    placeholder="Descripción..."
+                                    value={formPerfil.descripcion}
+                                    onChange={(e) => setFormPerfil(prev => ({ ...prev, descripcion: e.target.value }))}
+                                    rows={3}
+                                    maxLength={300}
+                                    className="border border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-oferta-500 resize-none"
+                                />
+                                <label className="flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
+                                    <input
+                                        type="checkbox"
+                                        checked={formPerfil.mostrarEmail}
+                                        onChange={(e) => setFormPerfil(prev => ({ ...prev, mostrarEmail: e.target.checked }))}
+                                        className="accent-oferta-500"
+                                    />
+                                    Mostrar mi email públicamente
+                                </label>
+                                {errorPerfil && <p className="text-xs text-red-400">{errorPerfil}</p>}
+                                <button
+                                    onClick={handleGuardarPerfil}
+                                    disabled={guardando}
+                                    className="bg-oferta-500 hover:bg-oferta-600 text-white font-semibold px-5 py-2 rounded-xl text-sm transition-colors disabled:opacity-50"
+                                >
+                                    {guardando ? "Guardando..." : "Guardar cambios"}
+                                </button>
+                            </div>
+                        )}
+                    </div>
+                </div>
+
+                {/* anuncios */}
+                <div>
+                    <h3 className="text-lg font-semibold text-gray-700 mb-4">
+                        Anuncios de {perfil.nombre}
+                    </h3>
+
+                    {anuncios.length === 0 ? (
+                        <div className="text-center py-16 text-gray-400">
+                            <p>Este usuario no tiene anuncios publicados.</p>
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+                            {anuncios.map((anuncio) => (
+                                <AnuncioCard
+                                    key={anuncio.id}
+                                    anuncio={anuncio}
+                                    imagenes={anuncio.imagenes || []}
+                                    onDelete={handleDelete}
+                                    usuario={usuario}
+                                />
+                            ))}
+                        </div>
+                    )}
+                </div>
+                <div>
+                    <h3 className="text-lg font-semibold text-gray-700 mb-4">
+                        Reseñas de {perfil.nombre}
+                    </h3>
+
+                    {puedeReseñar && (
+                        <div className="mb-6">
+                            <button
+                                onClick={() => {
+                                    setPanelAbierto(prev => !prev);
+                                    setPuntuacion(0);
+                                    setComentario("");
+                                    setErrorReseña(null);
+                                }}
+                                className={panelAbierto
+                                    ? "bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold px-4 py-2 rounded-xl text-sm transition-colors"
+                                    : "bg-oferta-500 hover:bg-oferta-600 text-white font-semibold px-4 py-2 rounded-xl text-sm transition-colors"
+                                }
+                            >
+                                {panelAbierto ? "Cancelar" : "Añadir reseña"}
+                            </button>
+
+                            {panelAbierto && (
+                                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 mt-3">
+                                    <p className="text-sm font-medium text-gray-700 mb-3">Deja tu valoración</p>
+                                    <SelectorEstrellas valor={puntuacion} onChange={setPuntuacion} />
+                                    <textarea
+                                        value={comentario}
+                                        onChange={(e) => setComentario(e.target.value)}
+                                        placeholder="Comentario opcional..."
+                                        maxLength={500}
+                                        rows={3}
+                                        className="w-full mt-3 border border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-oferta-500 resize-none"
+                                    />
+                                    {errorReseña && <p className="text-xs text-red-400 mt-1">{errorReseña}</p>}
+                                    <button
+                                        onClick={async () => {
+                                            if (puntuacion === 0) { setErrorReseña("Selecciona una puntuación."); return; }
+                                            setEnviando(true);
+                                            setErrorReseña(null);
+                                            try {
+                                                await crearReseña(id, puntuacion, comentario);
+                                                const reseñasActualizadas = await getReseñas(id);
+                                                setReseñas(reseñasActualizadas);
+                                                const perfilActualizado = await getUsuarioPublico(id);
+                                                setPerfil(perfilActualizado);
+                                                setPanelAbierto(false); // 👈 cierra el panel
+                                                setPuntuacion(0);
+                                                setComentario("");
+                                            } catch (e) {
+                                                setErrorReseña(e.message);
+                                            } finally {
+                                                setEnviando(false);
+                                            }
+                                        }}
+                                        disabled={enviando}
+                                        className="mt-3 bg-oferta-500 hover:bg-oferta-600 text-white font-semibold px-5 py-2 rounded-xl text-sm transition-colors disabled:opacity-50"
+                                    >
+                                        {enviando ? "Enviando..." : "Publicar reseña"}
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    )}
+
+                    {reseñas.length === 0 ? (
+                        <div className="text-center py-10 text-gray-400">
+                            <p>Este vendedor no tiene reseñas todavía.</p>
+                        </div>
+                    ) : (
+                        <div className="flex flex-col gap-4">
+                            {reseñas.map((reseña) => (
+                                <div key={reseña.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-8 h-8 rounded-full bg-oferta-100 flex items-center justify-center shrink-0">
+                                                <span className="text-sm font-bold text-oferta-600">
+                                                    {reseña.autor.nombre.charAt(0).toUpperCase()}
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <p className="text-sm font-medium text-gray-800">{reseña.autor.nombre}</p>
+                                                <p className="text-xs text-gray-400">{reseña.fecha}</p>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-center gap-3">
+                                            <Estrellas puntuacion={reseña.puntuacion} />
+                                            {usuario?.id === reseña.autor.id && (
+                                                <button
+                                                    onClick={() => handleBorrarReseña(reseña.id)}
+                                                    className="text-xs text-red-400 hover:text-red-600 transition-colors"
+                                                >
+                                                    Borrar
+                                                </button>
+                                            )}
+                                        </div>
+                                    </div>
+                                    {reseña.comentario && (
+                                        <p className="text-sm text-gray-600 mt-3">{reseña.comentario}</p>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
+
+                </div>
+            </main>
+            <Footer />
+        </div>
+    );
+}

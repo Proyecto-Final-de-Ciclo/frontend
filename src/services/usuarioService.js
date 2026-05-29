@@ -1,0 +1,109 @@
+const BASE = import.meta.env.VITE_APP_BACKEND;
+
+// Hace login y guarda el token y los datos del usuario en localStorage
+export const login = async (nombre, password) => {
+  const response = await fetch(`${BASE}/api/auth/signin`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ nombre, password }),
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || "Usuario o contraseña incorrectos.");
+  }
+
+  const datos = await response.json();
+  localStorage.setItem("token", datos.accessToken);
+  localStorage.setItem("usuario", JSON.stringify(datos));
+  return datos;
+};
+
+// Borra el token y los datos del usuario
+export const logout = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("usuario");
+};
+
+// Devuelve el usuario guardado, o null si no hay sesión
+export const getUsuario = () => {
+  const usuario = localStorage.getItem("usuario");
+  return usuario ? JSON.parse(usuario) : null;
+};
+
+// Devuelve el token para añadirlo en las peticiones protegidas
+export const getToken = () => localStorage.getItem("token");
+
+export const register = async (nombre, email, password) => {
+  const response = await fetch(`${BASE}/api/auth/signup`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ nombre, email, password, rol: "USER" }),
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || "Error al registrarse");
+  }
+
+  return await response.json();
+};
+
+
+const authHeader = () => ({ "Authorization": `Bearer ${getToken()}` });
+
+export const getUsuarios = async (busqueda = "") => {
+    const params = busqueda ? `?busqueda=${busqueda}` : "";
+    const token = getToken();
+    const headers = { "Content-Type": "application/json" };
+    if (token) headers["Authorization"] = `Bearer ${token}`;
+
+    const response = await fetch(`${BASE}/usuarios${params}`, {
+        method: "GET",
+        headers,
+    });
+    if (response.status === 404) return [];
+    if (!response.ok) throw new Error("Error al obtener los usuarios");
+    return await response.json();
+};
+
+export const updateUsuario = async (id, usuario) => {
+  const response = await fetch(`${BASE}/usuario/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json", ...authHeader() },
+    body: JSON.stringify(usuario),
+  });
+  if (!response.ok) throw new Error("Error al editar el usuario");
+  return await response.json();
+};
+
+export const deleteUsuario = async (id) => {
+  const response = await fetch(`${BASE}/usuario/${id}`, {
+    method: "DELETE",
+    headers: authHeader(),
+  });
+  if (!response.ok) throw new Error("Error al borrar el usuario");
+  return true;
+};
+
+export const getUsuarioPublico = async (id) => {
+    const response = await fetch(`${BASE}/usuario/${id}`);
+    if (!response.ok) throw new Error("Usuario no encontrado");
+    return await response.json();
+};
+
+export const getAnunciosUsuario = async (id) => {
+    const response = await fetch(`${BASE}/usuario/${id}/anuncios`);
+    if (!response.ok) throw new Error("Error al obtener los anuncios");
+    return await response.json();
+};
+
+export const editarPerfil = async (datos) => {
+    const response = await fetch(`${BASE}/usuario/perfil`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json", ...authHeader() },
+        body: JSON.stringify(datos),
+    });
+    if (!response.ok) throw new Error("Error al editar el perfil");
+    return await response.json();
+};
