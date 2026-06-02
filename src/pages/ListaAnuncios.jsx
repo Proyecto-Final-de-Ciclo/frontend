@@ -1,5 +1,3 @@
-// página principal, muestra todos los anuncios
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AnuncioCard from "../components/AnuncioCard";
@@ -145,104 +143,113 @@ export default function ListaAnuncios() {
   return (
     <div className="min-h-screen bg-transparent">
 
-      {/* cebecera */}
+      {/* cabecera */}
       <header className="bg-white border-b border-gray-100 sticky top-0 z-10 shadow-sm">
         {/* pestañas navegación */}
         <NavBar />
 
-        <div className="max-w-5xl mx-auto px-4 py-4 flex items-center gap-4">
-          <h1 className="text-xl font-bold text-oferta-600 whitespace-nowrap">
-            Anuncios
-          </h1>
+        <div className="max-w-5xl mx-auto px-4 py-4 space-y-3">
 
-          {/* buscador anuncios */}
-          <input
-            type="text"
-            placeholder="Buscar anuncios..."
-            value={filtros.nombre}
-            onChange={(e) => cambiarFiltro("nombre", e.target.value)}
-            className="flex-1 border border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-oferta-500"
-          />
+          {/* moneda y publicar */}
+          <div className="flex items-center justify-between gap-3">
+            <h1 className="text-xl font-bold text-oferta-600 whitespace-nowrap">
+              Anuncios
+            </h1>
 
-          {/* buscador usuarios */}
-          <div className="relative flex-1">
-            <input
-              type="text"
-              placeholder="Buscar vendedor..."
-              value={busquedaUsuario}
-              onChange={(e) => {
-                setBusquedaUsuario(e.target.value);
-                buscarUsuarios(e.target.value);
-              }}
-              className="w-full border border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-oferta-500"
-            />
-            {/* resultados desplegables */}
-            {busquedaUsuario.trim() && (
-              <div className="absolute top-full mt-1 w-full bg-white border border-gray-100 rounded-xl shadow-lg z-20 overflow-hidden">
-                {buscandoUsuarios && (
-                  <p className="text-sm text-gray-400 px-4 py-3">Buscando...</p>
-                )}
-                {!buscandoUsuarios && resultadosUsuarios.length === 0 && (
-                  <p className="text-sm text-gray-400 px-4 py-3">No se encontraron vendedores.</p>
-                )}
-                {!buscandoUsuarios && resultadosUsuarios.map((u) => (
-                  <div
-                    key={u.id}
-                    onClick={() => {
-                      navigate(`/usuario/${u.id}`);
-                      setBusquedaUsuario("");
-                      setResultadosUsuarios([]);
-                    }}
-                    className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors border-b border-gray-50 last:border-0"
+            <div className="flex items-center gap-2">
+              {/* selector de moneda */}
+              {usuario && (
+                <div className="relative shrink-0">
+                  <select
+                    value={moneda}
+                    onChange={(e) => cambiarMoneda(e.target.value)}
+                    className="appearance-none border border-gray-200 rounded-xl pl-3 pr-8 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-oferta-500 text-gray-600 bg-white cursor-pointer"
                   >
-                    <div className="w-8 h-8 rounded-full bg-oferta-100 flex items-center justify-center shrink-0">
-                      <span className="text-sm font-bold text-oferta-600">
-                        {u.nombre.charAt(0).toUpperCase()}
-                      </span>
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-gray-800">{u.nombre}</p>
-                      <p className="text-xs text-gray-400">{u.email}</p>
-                    </div>
+                    {MONEDAS.map(m => (
+                      <option key={m.codigo} value={m.codigo}>
+                        {m.simbolo} {m.codigo}
+                      </option>
+                    ))}
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-2 flex items-center text-gray-400 text-xs">
+                    ▼
                   </div>
-                ))}
-              </div>
-            )}
+                </div>
+              )}
+
+              {/* publicar anuncio */}
+              {usuario && usuario.rol !== "ROLE_ADMIN" && (
+                <button
+                  onClick={() => navigate("/anuncio/nuevo")}
+                  className="bg-oferta-500 hover:bg-oferta-600 text-white font-semibold px-4 py-2 rounded-xl text-sm transition-colors whitespace-nowrap"
+                >
+                  + Publicar
+                </button>
+              )}
+            </div>
           </div>
 
-          {/* selector de moneda — fuera del buscador */}
-          {usuario && (
-            <div className="relative shrink-0">
-              <select
-                value={moneda}
-                onChange={(e) => cambiarMoneda(e.target.value)}
-                className="appearance-none border border-gray-200 rounded-xl pl-3 pr-8 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-oferta-500 text-gray-600 bg-white cursor-pointer"
-              >
-                {MONEDAS.map(m => (
-                  <option key={m.codigo} value={m.codigo}>
-                    {m.simbolo} {m.codigo}
-                  </option>
-                ))}
-              </select>
-              <div className="pointer-events-none absolute inset-y-0 right-2 flex items-center text-gray-400 text-xs">
-                ▼
-              </div>
-            </div>
-          )}
+          {/* buscadores */}
+          <div className="flex flex-col sm:flex-row gap-2">
+            {/* buscador anuncios */}
+            <input
+              type="text"
+              placeholder="Buscar anuncios..."
+              value={filtros.nombre}
+              onChange={(e) => cambiarFiltro("nombre", e.target.value)}
+              className="flex-1 border border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-oferta-500"
+            />
 
-          {/* publicar anuncio — fuera del buscador */}
-          {usuario && usuario.rol !== "ROLE_ADMIN" && (
-            <button
-              onClick={() => navigate("/anuncio/nuevo")}
-              className="bg-oferta-500 hover:bg-oferta-600 text-white font-semibold px-4 py-2 rounded-xl text-sm transition-colors whitespace-nowrap"
-            >
-              + Publicar
-            </button>
-          )}
+            {/* buscador usuarios */}
+            <div className="relative flex-1">
+              <input
+                type="text"
+                placeholder="Buscar vendedor..."
+                value={busquedaUsuario}
+                onChange={(e) => {
+                  setBusquedaUsuario(e.target.value);
+                  buscarUsuarios(e.target.value);
+                }}
+                className="w-full border border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-oferta-500"
+              />
+              {/* resultados desplegables */}
+              {busquedaUsuario.trim() && (
+                <div className="absolute top-full mt-1 w-full bg-white border border-gray-100 rounded-xl shadow-lg z-20 overflow-hidden">
+                  {buscandoUsuarios && (
+                    <p className="text-sm text-gray-400 px-4 py-3">Buscando...</p>
+                  )}
+                  {!buscandoUsuarios && resultadosUsuarios.length === 0 && (
+                    <p className="text-sm text-gray-400 px-4 py-3">No se encontraron vendedores.</p>
+                  )}
+                  {!buscandoUsuarios && resultadosUsuarios.map((u) => (
+                    <div
+                      key={u.id}
+                      onClick={() => {
+                        navigate(`/usuario/${u.id}`);
+                        setBusquedaUsuario("");
+                        setResultadosUsuarios([]);
+                      }}
+                      className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors border-b border-gray-50 last:border-0"
+                    >
+                      <div className="w-8 h-8 rounded-full bg-oferta-100 flex items-center justify-center shrink-0">
+                        <span className="text-sm font-bold text-oferta-600">
+                          {u.nombre.charAt(0).toUpperCase()}
+                        </span>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-800">{u.nombre}</p>
+                        <p className="text-xs text-gray-400">{u.email}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </header>
 
-      {/* fila de filtros */}
+      {/* filtros */}
       <div className="bg-white border-b border-gray-100">
         <div className="max-w-5xl mx-auto px-4 py-2 flex items-center gap-2 overflow-x-auto">
 

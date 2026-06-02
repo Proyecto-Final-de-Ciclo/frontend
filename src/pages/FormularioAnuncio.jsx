@@ -1,5 +1,3 @@
-// sirve para crear un anuncio (/anuncio/nuevo) o editarlo (/anuncio/3/editar)
-
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getAnuncio, createAnuncio, updateAnuncio, getImagenesAnuncio, deleteImagenAnuncio, addImagenesAnuncio } from "../services/anuncioServices";

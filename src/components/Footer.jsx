@@ -1,13 +1,11 @@
-// Componente Footer — se muestra en todas las páginas
-
 export default function Footer() {
   return (
     <footer className="bg-gray-900 mt-auto">
 
-      {/* fila superior: descripción + agradecimientos y proyecto */}
+      {/* descripción y agradecimientos y proyecto */}
       <div className="max-w-5xl mx-auto px-6 pt-8 pb-6 grid grid-cols-1 md:grid-cols-2 gap-8 border-b border-white/10">
 
-        {/* columna izquierda — sobre RadiOferta */}
+        {/* sobre RadiOferta */}
         <div>
           <p className="text-white text-sm font-medium mb-2">RadiOferta</p>
           <p className="text-white/50 text-xs leading-relaxed">
@@ -20,7 +18,7 @@ export default function Footer() {
           </p>
         </div>
 
-        {/* columna derecha — agradecimientos y proyecto */}
+        {/* agradecimientos y proyecto */}
         <div className="flex flex-col gap-5">
 
           {/* agradecimientos */}
@@ -60,7 +58,7 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* fila inferior: comunidad, legal y sabías que */}
+      {/* comunidad, legal y sabías que */}
       <div className="max-w-5xl mx-auto px-6 py-5 grid grid-cols-1 sm:grid-cols-3 gap-6 border-b border-white/10">
 
         {/* comunidad y recursos */}
@@ -125,7 +123,6 @@ export default function Footer() {
 
       </div>
 
-      {/* barra de copyright */}
       <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
         <span className="text-white/25 text-xs">© 2026 RadiOferta</span>
         <span className="text-white/25 text-xs">73 de EA1IWS &amp; EA1EWZ</span>

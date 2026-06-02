@@ -1,6 +1,3 @@
-// tarjeta que representa un anuncio en el grid. Las props son un objeto
-// con todos los datos del anuncio y una función que se ejecuta al pulsar borrar
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { etiquetaEstado } from "../utils/estados";
@@ -10,7 +7,6 @@ import { useMoneda, MONEDAS } from "../context/MonedaContext";
 
 export default function AnuncioCard({ anuncio, imagenes, onDelete, usuario, onFavoritoChange }) {
 
-  // navigate es una función que usamos para ir a otra ruta
   const navigate = useNavigate();
   const [favorito, setFavorito] = useState(false);
   const [cargandoFav, setCargandoFav] = useState(false);

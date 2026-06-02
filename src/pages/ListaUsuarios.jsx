@@ -66,7 +66,7 @@ export default function ListaUsuarios() {
       {/* cabecera */}
       <header className="bg-white border-b border-gray-100 sticky top-0 z-10 shadow-sm">
         <NavBar />
-        
+
         <div className="max-w-5xl mx-auto px-4 py-4 flex items-center gap-4">
 
           {/* buscador */}
@@ -161,7 +161,7 @@ export default function ListaUsuarios() {
               {usuarios.map((u, index) => (
                 <div
                   key={u.id}
-                  className={`flex items-center justify-between px-6 py-4 ${index !== usuarios.length - 1 ? "border-b border-gray-100" : ""}`}
+                  className={`flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 sm:px-6 py-4 ${index !== usuarios.length - 1 ? "border-b border-gray-100" : ""}`}
                 >
                   <div>
                     <p className="text-sm font-semibold text-gray-800">{u.nombre}</p>

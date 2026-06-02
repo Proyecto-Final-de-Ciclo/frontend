@@ -170,7 +170,7 @@ export default function PerfilUsuario() {
             <main className="max-w-5xl mx-auto px-4 py-8 space-y-8 flex-1 w-full">
 
                 {/* perfil */}
-                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex items-center gap-6">
+                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex flex-col sm:flex-row items-center sm:items-center gap-4 sm:gap-6">
 
                     {/* avatar con inicial del nombre */}
                     <div className="w-16 h-16 rounded-full bg-oferta-100 flex items-center justify-center shrink-0">
@@ -180,7 +180,7 @@ export default function PerfilUsuario() {
                     </div>
 
                     {/* datos usuario */}
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col gap-1 text-center sm:text-left">
                         <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
                             <User className="w-4 h-4 text-oferta-500" />
                             {perfil.nombre}

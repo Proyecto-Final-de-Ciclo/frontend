@@ -1,5 +1,3 @@
-// Página de Política de Privacidad — ruta: /privacidad
-
 import { useNavigate } from "react-router-dom";
 import BotonVolver from "../components/BotonVolver";
 import Footer from "../components/Footer"

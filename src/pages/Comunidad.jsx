@@ -141,7 +141,7 @@ export default function Comunidad() {
       {/* contenido */}
       <main className="max-w-3xl mx-auto px-4 py-6 flex-1 w-full min-h-[60vh]">
 
-        {/* pestaña llamadas activas ── */}
+        {/* pestaña llamadas activas */}
         {pestanaActiva === "llamadas" && (
           <div>
             {errorLlamadas && (
@@ -181,7 +181,7 @@ export default function Comunidad() {
               </div>
             )}
 
-            {/* demás llamadas */}
+            {/* restpo de llamadas */}
             {otrasllamadas.map((llamada) => (
               <div
                 key={llamada.id}
@@ -232,7 +232,7 @@ export default function Comunidad() {
               <p className="text-sm text-gray-400 text-center py-10">Buscando...</p>
             )}
 
-            {/* estado vacío inicial */}
+            {/* estado vacío del principio */}
             {busqueda.trim() === "" && (
               <div className="flex flex-col items-center justify-center py-16 text-center gap-4">
                 <svg xmlns="http://www.w3.org/2000/svg" className="w-36 h-36 text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -246,7 +246,7 @@ export default function Comunidad() {
               </div>
             )}
 
-            {/* sin resultados tras buscar */}
+            {/* sin resultados */}
             {!buscando && resultados.length === 0 && busqueda.trim() !== "" && (
               <div className="flex flex-col items-center justify-center py-16 text-center gap-4">
                 <svg xmlns="http://www.w3.org/2000/svg" className="w-36 h-36 text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">

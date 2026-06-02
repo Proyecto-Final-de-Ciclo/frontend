@@ -81,12 +81,12 @@ export default function Noticias() {
             </header>
 
             {/* contenido principal con panel lateral */}
-            <main className={`max-w-5xl mx-auto px-4 py-8 ${noticiaActiva ? "h-[calc(100vh-120px)]" : ""}`}>
-                <div className={`flex gap-6 ${noticiaActiva ? "h-full" : ""}`}>
+            <main className={`max-w-5xl mx-auto px-4 py-8 ${noticiaActiva ? "lg:h-[calc(100vh-120px)]" : ""}`}>
+                <div className={`flex flex-col lg:flex-row gap-6 ${noticiaActiva ? "lg:h-full" : ""}`}>
 
                     {/* panel izquierdo */}
                     <div className={`flex flex-col bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden transition-all
-            ${noticiaActiva ? "w-2/5 overflow-y-auto" : "w-full"}`}>
+            ${noticiaActiva ? "hidden lg:flex lg:w-2/5 overflow-y-auto" : "w-full"}`}>
 
                         {/* noticia destacada */}
                         {destacada && (
@@ -126,23 +126,33 @@ export default function Noticias() {
                     {/* panel derecho, detalle de la noticia */}
                     {/* panel derecho */}
                     {noticiaActiva && (
-                        <div className="w-3/5 bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col h-full">
+                        <div className="w-full lg:w-3/5 bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col lg:h-full">
                             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 flex-shrink-0">
                                 <p className="text-xs font-medium text-oferta-500 uppercase tracking-widest">{noticiaActiva.fuente}</p>
-                                <button
-                                    onClick={cerrarNoticia}
-                                    className="text-xs text-gray-400 hover:text-red-400 border border-gray-200 hover:border-red-200 px-3 py-1.5 rounded-lg transition-colors"
-                                >
-                                    ✕ Cerrar
-                                </button>
+                                <div className="flex items-center gap-2">
+                                    {/* botón volver en movil */}
+                                    <button
+                                        onClick={cerrarNoticia}
+                                        className="lg:hidden text-xs text-oferta-600 border border-oferta-200 hover:bg-oferta-50 px-3 py-1.5 rounded-lg transition-colors"
+                                    >
+                                        ← Volver
+                                    </button>
+                                    {/* botón cerrar en ordenador */}
+                                    <button
+                                        onClick={cerrarNoticia}
+                                        className="hidden lg:block text-xs text-gray-400 hover:text-red-400 border border-gray-200 hover:border-red-200 px-3 py-1.5 rounded-lg transition-colors"
+                                    >
+                                        ✕ Cerrar
+                                    </button>
+                                </div>
                             </div>
                             <div className="p-6 overflow-y-auto flex-1">
                                 <h2 className="text-xl font-semibold text-gray-800 leading-snug mb-4">{noticiaActiva.titulo}</h2>
                                 <p className="text-sm text-gray-700 leading-relaxed mb-6">
                                     {noticiaActiva.descripcion}
                                 </p>
-                                <p className="text-xs text-gray-400 mb-6 flex items-center gap-2">📅 {noticiaActiva.fecha}</p>
-                                <a
+                                <p className="text-xs text-gray-400 mb-6 flex items-center gap-2">📅 {noticiaActiva.fecha}</p><a
+
                                     href={noticiaActiva.enlace}
                                     target="_blank"
                                     rel="noreferrer"

@@ -1,6 +1,3 @@
-// muestra toda la información de un anuncio
-// la url es /anuncio/:id
-
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { etiquetaEstado } from "../utils/estados";
@@ -131,7 +128,7 @@ export default function DetalleAnuncio() {
           {/* imágenes */}
           <div className="relative bg-gray-50">
             {imagenes.length === 0 ? (
-              <div className="h-96 flex items-center justify-center text-gray-400 text-sm">
+              <div className="h-64 sm:h-96 flex items-center justify-center text-gray-400 text-sm">
                 Sin imágenes
               </div>
             ) : (
@@ -140,7 +137,7 @@ export default function DetalleAnuncio() {
                 <img
                   src={`${import.meta.env.VITE_APP_BACKEND}/files/${imagenes[indiceImagen].url}`}
                   alt="imagen del anuncio"
-                  className="w-full h-96 object-cover cursor-pointer"
+                  className="w-full h-64 sm:h-96 object-cover cursor-pointer"
                   onClick={() => setImagenAmpliada(imagenes[indiceImagen].url)}
                 />
 

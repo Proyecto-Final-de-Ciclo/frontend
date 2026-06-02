@@ -1,5 +1,3 @@
-// Ruta: src/pages/Perfil.jsx
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUsuario } from "../context/UsuarioContext";
@@ -11,66 +9,51 @@ export default function Perfil() {
   const { usuario, login } = useUsuario();
   const navigate = useNavigate();
 
-  // Si no hay sesión, redirigimos al login
   useEffect(() => {
     if (!usuario) navigate("/login");
   }, [usuario]);
 
-  // ── Pestañas ────────────────────────────────────────────────────
   const [pestanaActiva, setPestanaActiva] = useState("datos");
 
-  // ── Estado del formulario ───────────────────────────────────────
-  // Inicializamos con los datos actuales del usuario en sesión
   const [form, setForm] = useState({
-    // datos básicos
-    nombre:                    usuario?.nombre || "",
-    nombreReal:                usuario?.nombreReal || "",
-    apellidos:                 usuario?.apellidos || "",
-    email:                     usuario?.email || "",
-    localizacion:              usuario?.localizacion || "",
-    // visibilidad datos básicos
-    mostrarEmail:              usuario?.mostrarEmail || false,
-    mostrarNombreReal:         usuario?.mostrarNombreReal || false,
-    mostrarApellidos:          usuario?.mostrarApellidos || false,
-    mostrarUbicacion:          usuario?.mostrarUbicacion || false,
-    // perfil anuncios
-    descripcion:               usuario?.descripcion || "",
+    nombre: usuario?.nombre || "",
+    nombreReal: usuario?.nombreReal || "",
+    apellidos: usuario?.apellidos || "",
+    email: usuario?.email || "",
+    localizacion: usuario?.localizacion || "",
+    mostrarEmail: usuario?.mostrarEmail || false,
+    mostrarNombreReal: usuario?.mostrarNombreReal || false,
+    mostrarApellidos: usuario?.mostrarApellidos || false,
+    mostrarUbicacion: usuario?.mostrarUbicacion || false,
+    descripcion: usuario?.descripcion || "",
     mostrarDescripcionVendedor: usuario?.mostrarDescripcionVendedor || false,
-    // perfil radio
-    indicativo:                usuario?.indicativo || "",
-    activoDesde:               usuario?.activoDesde || "",
-    modos:                     usuario?.modos || "",
-    descripcionRadio:          usuario?.descripcionRadio || "",
-    qslBuro:                   usuario?.qslBuro || false,
-    // visibilidad perfil radio
-    mostrarDescripcionRadio:   usuario?.mostrarDescripcionRadio || false,
-    mostrarActivoDesde:        usuario?.mostrarActivoDesde || false,
+    indicativo: usuario?.indicativo || "",
+    activoDesde: usuario?.activoDesde || "",
+    modos: usuario?.modos || "",
+    descripcionRadio: usuario?.descripcionRadio || "",
+    qslBuro: usuario?.qslBuro || false,
+    mostrarDescripcionRadio: usuario?.mostrarDescripcionRadio || false,
+    mostrarActivoDesde: usuario?.mostrarActivoDesde || false,
   });
 
-  // ── Estado de contraseña — separado del resto ───────────────────
   const [formPassword, setFormPassword] = useState({
     actual: "", nueva: "", repetir: ""
   });
   const [errorPassword, setErrorPassword] = useState(null);
   const [guardandoPassword, setGuardandoPassword] = useState(false);
 
-  // ── Estado general ──────────────────────────────────────────────
   const [guardando, setGuardando] = useState(false);
   const [error, setError] = useState(null);
   const [exito, setExito] = useState(false);
 
-  // ── Helper para actualizar un campo del formulario ──────────────
   const set = (campo, valor) => setForm(prev => ({ ...prev, [campo]: valor }));
 
-  // ── Guardar cambios ─────────────────────────────────────────────
   const handleGuardar = async () => {
     setGuardando(true);
     setError(null);
     setExito(false);
     try {
       const actualizado = await editarPerfil(form);
-      // Actualizamos el contexto para que el resto de la app
-      // vea los datos nuevos sin necesidad de recargar
       login({ ...usuario, ...actualizado });
       setExito(true);
     } catch (e) {
@@ -80,7 +63,6 @@ export default function Perfil() {
     }
   };
 
-  // ── Cambiar contraseña ──────────────────────────────────────────
   const handleCambiarPassword = async () => {
     setErrorPassword(null);
     if (!formPassword.actual.trim()) {
@@ -107,7 +89,6 @@ export default function Perfil() {
     }
   };
 
-  // ── Generador de años para el selector "Activo desde" ──────────
   const años = [];
   for (let y = new Date().getFullYear(); y >= 1950; y--) años.push(y);
 
@@ -131,9 +112,9 @@ export default function Perfil() {
       <div className="bg-white border-b border-gray-100">
         <div className="max-w-3xl mx-auto px-4 flex gap-2 py-2">
           {[
-            { id: "datos",    label: "Mis datos" },
+            { id: "datos", label: "Mis datos" },
             { id: "anuncios", label: "Perfil anuncios" },
-            { id: "radio",    label: "Perfil radio" },
+            { id: "radio", label: "Perfil radio" },
           ].map((p) => (
             <button
               key={p.id}
@@ -152,7 +133,6 @@ export default function Perfil() {
 
       <main className="max-w-3xl mx-auto px-4 py-6">
 
-        {/* mensaje de éxito */}
         {exito && (
           <div className="bg-oferta-50 border border-oferta-200 rounded-xl px-4 py-3
             text-sm text-marino-500 mb-4">
@@ -160,7 +140,7 @@ export default function Perfil() {
           </div>
         )}
 
-        {/* ── PESTAÑA: MIS DATOS ── */}
+        {/* mis datos */}
         {pestanaActiva === "datos" && (
           <div className="flex flex-col gap-4">
 
@@ -184,7 +164,7 @@ export default function Perfil() {
                 </Campo>
 
                 {/* nombre real */}
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <Campo
                     label="Nombre"
                     publico={form.mostrarNombreReal}
@@ -238,7 +218,7 @@ export default function Perfil() {
                   />
                 </Campo>
 
-                {/* miembro desde — no editable */}
+                {/* miembro desde */}
                 <Campo label="Miembro desde" siemprePublico>
                   <input
                     value={usuario.fechaRegistro || ""}
@@ -268,7 +248,7 @@ export default function Perfil() {
                     className={estiloInput}
                   />
                 </div>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className={estiloLabel}>Nueva contraseña</label>
                     <input
@@ -315,7 +295,7 @@ export default function Perfil() {
           </div>
         )}
 
-        {/* ── PESTAÑA: PERFIL ANUNCIOS ── */}
+        {/* perfil anuncios */}
         {pestanaActiva === "anuncios" && (
           <div className="flex flex-col gap-4">
 
@@ -347,7 +327,7 @@ export default function Perfil() {
               </div>
             </div>
 
-            {/* valoración — solo lectura */}
+            {/* valoración */}
             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
               <div className="px-5 py-4 border-b border-gray-50">
                 <p className="text-sm font-medium text-gray-800">Tu valoración</p>
@@ -387,7 +367,7 @@ export default function Perfil() {
           </div>
         )}
 
-        {/* ── PESTAÑA: PERFIL RADIO ── */}
+        {/* perfil radio */}
         {pestanaActiva === "radio" && (
           <div className="flex flex-col gap-4">
             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
@@ -402,7 +382,7 @@ export default function Perfil() {
               </div>
               <div className="px-5 py-4 flex flex-col gap-4">
 
-                {/* indicativo — siempre público */}
+                {/* indicativo */}
                 <Campo label="Indicativo" siemprePublico>
                   <input
                     value={form.indicativo}
@@ -430,7 +410,7 @@ export default function Perfil() {
                   </select>
                 </Campo>
 
-                {/* modos — siempre público */}
+                {/* modos */}
                 <Campo label="Modos de operación" siemprePublico>
                   <input
                     value={form.modos}
@@ -440,7 +420,7 @@ export default function Perfil() {
                   />
                 </Campo>
 
-                {/* QSL buró — siempre público */}
+                {/* QSL buró */}
                 <div>
                   <div className="flex items-center justify-between mb-1">
                     <span className={estiloLabel}>QSL por buró</span>
@@ -494,7 +474,7 @@ export default function Perfil() {
   );
 }
 
-// ── Estilos reutilizables ────────────────────────────────────────
+// estilos
 const estiloInput = `w-full border border-gray-200 rounded-xl px-3 py-2 text-sm
   focus:outline-none focus:ring-2 focus:ring-oferta-500 bg-white`;
 
@@ -504,8 +484,7 @@ const estiloInputDeshabilitado = `w-full border border-gray-100 rounded-xl px-3 
 const estiloLabel = `block text-xs font-medium text-gray-400 uppercase
   tracking-wide mb-1`;
 
-// ── Componente Campo ─────────────────────────────────────────────
-// Envuelve cada campo con su etiqueta y botón público/privado
+// envuelve cada campo con su etiqueta y botón público/privado
 function Campo({ label, children, siemprePublico, publico, onToggle }) {
   return (
     <div>
@@ -534,8 +513,7 @@ function Campo({ label, children, siemprePublico, publico, onToggle }) {
   );
 }
 
-// ── Componente BotonesGuardar ────────────────────────────────────
-// Botones de cancelar y guardar, compartidos entre las tres pestañas
+// botones de cancelar y guardar
 function BotonesGuardar({ guardando, error, onGuardar, onCancelar }) {
   return (
     <div>
