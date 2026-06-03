@@ -1,15 +1,27 @@
-# Etapa 1: compilar React
+# ==========================
+# Etapa 1: Build
+# ==========================
 FROM node:20-alpine AS build
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci --no-audit --no-fund
+RUN npm install
 COPY . .
-RUN NODE_OPTIONS="--max-old-space-size=512" npm run build
+RUN npm run build
 
-# Etapa 2: servir con nginx
+# ==========================
+# Etapa 2: Servir la aplicación
+# ==========================
 FROM nginx:alpine
-RUN rm -f /etc/nginx/conf.d/default.conf
+
+# Eliminamos configuración por defecto
+RUN rm /etc/nginx/conf.d/default.conf
+
+# Copiamos nuestra config personalizada
 COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Copiamos el build de Vite
 COPY --from=build /app/dist /usr/share/nginx/html
+
 EXPOSE 80
+
 CMD ["nginx", "-g", "daemon off;"]
