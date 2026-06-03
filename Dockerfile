@@ -1,27 +1,15 @@
-# ==========================
-# Etapa 1: Build
-# ==========================
+# Etapa 1: compilar React
 FROM node:20-alpine AS build
-
 WORKDIR /app
 COPY package*.json ./
-RUN npm install
+RUN npm ci --no-audit --no-fund
 COPY . .
+RUN NODE_OPTIONS="--max-old-space-size=512" npm run build
 
-# Vite "hornea" las variables VITE_* EN TIEMPO DE BUILD.
-# La URL del backend se lee de .env.production (incluido en el repo).
-RUN npm run build
-
-# ==========================
-# Etapa 2: Servir con nginx
-# ==========================
+# Etapa 2: servir con nginx
 FROM nginx:alpine
-
-# Copiamos el build estático generado por Vite
-COPY --from=build /app/dist /usr/share/nginx/html
-
-# Config de nginx para que React Router funcione al recargar rutas (/anuncios/5, etc.)
+RUN rm -f /etc/nginx/conf.d/default.conf
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-
+COPY --from=build /app/dist /usr/share/nginx/html
 EXPOSE 80
-CMD ["nginx","-g","daemon off;"]
+CMD ["nginx", "-g", "daemon off;"]
