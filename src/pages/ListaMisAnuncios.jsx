@@ -66,18 +66,18 @@ export default function ListaMisAnuncios() {
         </div>
       </header>
 
-      <main className="max-w-5xl mx-auto px-4 py-8 flex-1 w-full">
+      <main className="max-w-5xl mx-auto px-4 py-8 flex-1 w-full flex flex-col">
 
         {cargando && (
-          <div className="text-center py-20 text-gray-400">Cargando...</div>
+          <div className="flex-1 flex items-center justify-center text-gray-400">Cargando...</div>
         )}
 
         {error && (
-          <div className="text-center py-20 text-red-400"><p>{error}</p></div>
+          <div className="flex-1 flex items-center justify-center text-red-400"><p>{error}</p></div>
         )}
 
         {!cargando && !error && anuncios.length === 0 && (
-          <div className="text-center py-20 text-gray-400">
+          <div className="flex-1 flex items-center justify-center text-red-400">
             <p>Todavía no tienes anuncios publicados.</p>
             <button
               onClick={() => navigate("/anuncio/nuevo")}

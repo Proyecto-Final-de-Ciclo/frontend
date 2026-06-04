@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { login as loginService } from "../services/usuarioService";
 import { useUsuario } from "../context/UsuarioContext";
 import { Eye, EyeOff } from "lucide-react";
-import Footer from "../components/Footer"
 
 export default function Login() {
   const navigate = useNavigate();
@@ -27,7 +26,7 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-transparent flex items-center justify-center">
+    <div className="min-h-screen bg-transparent flex flex-col items-center justify-center">
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 w-full max-w-sm">
 
         <h1 className="text-xl font-bold text-oferta-600 mb-6 text-center">

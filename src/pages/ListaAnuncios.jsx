@@ -8,6 +8,7 @@ import { useMoneda, MONEDAS } from "../context/MonedaContext";
 import { getCategorias } from "../services/categoriaService";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
+import { SlidersHorizontal } from "lucide-react";
 
 export default function ListaAnuncios() {
 
@@ -24,6 +25,7 @@ export default function ListaAnuncios() {
   const [buscandoUsuarios, setBuscandoUsuarios] = useState(false);
   const { moneda, cambiarMoneda } = useMoneda();
   const [categorias, setCategorias] = useState([]);
+  const [filtrosAbiertos, setFiltrosAbiertos] = useState(false);
 
   // filtros
   const [filtros, setFiltros] = useState({
@@ -141,7 +143,7 @@ export default function ListaAnuncios() {
   }
 
   return (
-    <div className="min-h-screen bg-transparent">
+    <div className="min-h-screen bg-transparent flex flex-col">
 
       {/* cabecera */}
       <header className="bg-white border-b border-gray-100 sticky top-0 z-10 shadow-sm">
@@ -251,107 +253,213 @@ export default function ListaAnuncios() {
 
       {/* filtros */}
       <div className="bg-white border-b border-gray-100">
-        <div className="max-w-5xl mx-auto px-4 py-2 flex items-center gap-2 overflow-x-auto">
+        <div className="max-w-5xl mx-auto px-4 py-2">
 
-          {/* categoría */}
-          <select
-            value={filtros.categoria}
-            onChange={(e) => cambiarFiltro("categoria", e.target.value)}
-            className={`shrink-0 rounded-full px-3 py-1.5 text-sm border cursor-pointer
-        focus:outline-none focus:ring-2 focus:ring-oferta-500 transition-colors
-        ${filtros.categoria
-                ? "bg-oferta-500 text-white border-oferta-500"
-                : "bg-white text-gray-600 border-gray-200 hover:border-oferta-500"}`}
-          >
-            <option value="">Todas las categorías</option>
-            {categorias.map(cat => (
-              <option key={cat.id} value={cat.id}>{cat.nombre}</option>
-            ))}
-          </select>
-
-          {/* estado */}
-          <select
-            value={filtros.estado}
-            onChange={e => cambiarFiltro("estado", e.target.value)}
-            className={`shrink-0 rounded-full px-3 py-1.5 text-sm border cursor-pointer
-        focus:outline-none focus:ring-2 focus:ring-oferta-500 transition-colors
-        ${filtros.estado
-                ? "bg-oferta-500 text-white border-oferta-500"
-                : "bg-white text-gray-600 border-gray-200 hover:border-oferta-500"}`}
-          >
-            <option value="">Cualquier estado</option>
-            <option value="Perfecto">Perfecto</option>
-            <option value="Muy_bueno">Muy bueno</option>
-            <option value="Bueno">Bueno</option>
-            <option value="Aceptable">Aceptable</option>
-            <option value="Para_reparar">Para reparar</option>
-          </select>
-
-          {/* precio mín */}
-          <input
-            type="number" min="0" placeholder="Precio mín."
-            value={filtros.precioMin}
-            onChange={e => cambiarFiltro("precioMin", e.target.value)}
-            className={`shrink-0 w-28 rounded-full px-3 py-1.5 text-sm border
-        focus:outline-none focus:ring-2 focus:ring-oferta-500 transition-colors
-        ${filtros.precioMin
-                ? "bg-oferta-500 text-white border-oferta-500 placeholder:text-white"
-                : "bg-white text-gray-600 border-gray-200 hover:border-oferta-500"}`}
-          />
-
-          {/* precio máx */}
-          <input
-            type="number" min="0" placeholder="Precio máx."
-            value={filtros.precioMax}
-            onChange={e => cambiarFiltro("precioMax", e.target.value)}
-            className={`shrink-0 w-28 rounded-full px-3 py-1.5 text-sm border
-        focus:outline-none focus:ring-2 focus:ring-oferta-500 transition-colors
-        ${filtros.precioMax
-                ? "bg-oferta-500 text-white border-oferta-500 placeholder:text-white"
-                : "bg-white text-gray-600 border-gray-200 hover:border-oferta-500"}`}
-          />
-
-          {/* ordenar */}
-          <select
-            value={filtros.orden}
-            onChange={e => cambiarFiltro("orden", e.target.value)}
-            className={`shrink-0 rounded-full px-3 py-1.5 text-sm border cursor-pointer
-        focus:outline-none focus:ring-2 focus:ring-oferta-500 transition-colors
-        ${filtros.orden
-                ? "bg-oferta-500 text-white border-oferta-500"
-                : "bg-white text-gray-600 border-gray-200 hover:border-oferta-500"}`}
-          >
-            <option value="">Ordenar por...</option>
-            <option value="fecha_reciente">Más recientes</option>
-            <option value="fecha_antigua">Más antiguos</option>
-            <option value="precio_asc">Precio: menor a mayor</option>
-            <option value="precio_desc">Precio: mayor a menor</option>
-          </select>
-
-          {/* limpiar */}
-          {hayFiltrosActivos && (
-            <button
-              onClick={limpiarFiltros}
-              className="shrink-0 rounded-full px-3 py-1.5 text-sm border border-red-200 text-red-400 hover:bg-red-50 transition-colors"
+          <div className="hidden lg:flex items-center gap-2 overflow-x-auto">
+            {/* categoría */}
+            <select
+              value={filtros.categoria}
+              onChange={(e) => cambiarFiltro("categoria", e.target.value)}
+              className={`shrink-0 rounded-full px-3 py-1.5 text-sm border cursor-pointer
+    focus:outline-none focus:ring-2 focus:ring-oferta-500 transition-colors
+    ${filtros.categoria
+                  ? "bg-oferta-500 text-white border-oferta-500"
+                  : "bg-white text-gray-600 border-gray-200 hover:border-oferta-500"}`}
             >
-              Limpiar
+              <option value="">Todas las categorías</option>
+              {categorias.map(cat => (
+                <option key={cat.id} value={cat.id}>{cat.nombre}</option>
+              ))}
+            </select>
+
+            {/* estado */}
+            <select
+              value={filtros.estado}
+              onChange={e => cambiarFiltro("estado", e.target.value)}
+              className={`shrink-0 rounded-full px-3 py-1.5 text-sm border cursor-pointer
+    focus:outline-none focus:ring-2 focus:ring-oferta-500 transition-colors
+    ${filtros.estado
+                  ? "bg-oferta-500 text-white border-oferta-500"
+                  : "bg-white text-gray-600 border-gray-200 hover:border-oferta-500"}`}
+            >
+              <option value="">Cualquier estado</option>
+              <option value="Perfecto">Perfecto</option>
+              <option value="Muy_bueno">Muy bueno</option>
+              <option value="Bueno">Bueno</option>
+              <option value="Aceptable">Aceptable</option>
+              <option value="Para_reparar">Para reparar</option>
+            </select>
+
+            {/* precio mín */}
+            <input
+              type="number" min="0" placeholder="Precio mín."
+              value={filtros.precioMin}
+              onChange={e => cambiarFiltro("precioMin", e.target.value)}
+              className={`shrink-0 w-28 rounded-full px-3 py-1.5 text-sm border
+    focus:outline-none focus:ring-2 focus:ring-oferta-500 transition-colors
+    ${filtros.precioMin
+                  ? "bg-oferta-500 text-white border-oferta-500 placeholder:text-white"
+                  : "bg-white text-gray-600 border-gray-200 hover:border-oferta-500"}`}
+            />
+
+            {/* precio máx */}
+            <input
+              type="number" min="0" placeholder="Precio máx."
+              value={filtros.precioMax}
+              onChange={e => cambiarFiltro("precioMax", e.target.value)}
+              className={`shrink-0 w-28 rounded-full px-3 py-1.5 text-sm border
+    focus:outline-none focus:ring-2 focus:ring-oferta-500 transition-colors
+    ${filtros.precioMax
+                  ? "bg-oferta-500 text-white border-oferta-500 placeholder:text-white"
+                  : "bg-white text-gray-600 border-gray-200 hover:border-oferta-500"}`}
+            />
+
+            {/* ordenar */}
+            <select
+              value={filtros.orden}
+              onChange={e => cambiarFiltro("orden", e.target.value)}
+              className={`shrink-0 rounded-full px-3 py-1.5 text-sm border cursor-pointer
+    focus:outline-none focus:ring-2 focus:ring-oferta-500 transition-colors
+    ${filtros.orden
+                  ? "bg-oferta-500 text-white border-oferta-500"
+                  : "bg-white text-gray-600 border-gray-200 hover:border-oferta-500"}`}
+            >
+              <option value="">Ordenar por...</option>
+              <option value="fecha_reciente">Más recientes</option>
+              <option value="fecha_antigua">Más antiguos</option>
+              <option value="precio_asc">Precio: menor a mayor</option>
+              <option value="precio_desc">Precio: mayor a menor</option>
+            </select>
+
+            {/* limpiar */}
+            {hayFiltrosActivos && (
+              <button
+                onClick={limpiarFiltros}
+                className="shrink-0 ml-auto rounded-full px-3 py-1.5 text-sm font-medium bg-red-50 border border-red-300 text-red-500 hover:bg-red-100 transition-colors"
+              >
+                Limpiar
+              </button>
+            )}
+          </div>
+
+          {/* móvil: botón + panel desplegable */}
+          <div className="lg:hidden">
+            <button
+              onClick={() => setFiltrosAbiertos(prev => !prev)}
+              className="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-oferta-500 transition-colors"
+            >
+              <SlidersHorizontal className="w-4 h-4" />
+              Filtros
+              {hayFiltrosActivos && (
+                <span className="w-2 h-2 rounded-full bg-oferta-500" />
+              )}
             </button>
-          )}
+
+            {filtrosAbiertos && (
+              <div className="mt-3 flex flex-col gap-2">
+                {/* categoría */}
+                <select
+                  value={filtros.categoria}
+                  onChange={(e) => cambiarFiltro("categoria", e.target.value)}
+                  className={`w-full rounded-full px-3 py-1.5 text-sm border cursor-pointer
+    focus:outline-none focus:ring-2 focus:ring-oferta-500 transition-colors
+    ${filtros.categoria
+                      ? "bg-oferta-500 text-white border-oferta-500"
+                      : "bg-white text-gray-600 border-gray-200 hover:border-oferta-500"}`}
+                >
+                  <option value="">Todas las categorías</option>
+                  {categorias.map(cat => (
+                    <option key={cat.id} value={cat.id}>{cat.nombre}</option>
+                  ))}
+                </select>
+
+                {/* estado */}
+                <select
+                  value={filtros.estado}
+                  onChange={e => cambiarFiltro("estado", e.target.value)}
+                  className={`w-full rounded-full px-3 py-1.5 text-sm border cursor-pointer
+    focus:outline-none focus:ring-2 focus:ring-oferta-500 transition-colors
+    ${filtros.estado
+                      ? "bg-oferta-500 text-white border-oferta-500"
+                      : "bg-white text-gray-600 border-gray-200 hover:border-oferta-500"}`}
+                >
+                  <option value="">Cualquier estado</option>
+                  <option value="Perfecto">Perfecto</option>
+                  <option value="Muy_bueno">Muy bueno</option>
+                  <option value="Bueno">Bueno</option>
+                  <option value="Aceptable">Aceptable</option>
+                  <option value="Para_reparar">Para reparar</option>
+                </select>
+
+                {/* precio mín */}
+                <input
+                  type="number" min="0" placeholder="Precio mín."
+                  value={filtros.precioMin}
+                  onChange={e => cambiarFiltro("precioMin", e.target.value)}
+                  className={`w-full rounded-full px-3 py-1.5 text-sm border
+    focus:outline-none focus:ring-2 focus:ring-oferta-500 transition-colors
+    ${filtros.precioMin
+                      ? "bg-oferta-500 text-white border-oferta-500 placeholder:text-white"
+                      : "bg-white text-gray-600 border-gray-200 hover:border-oferta-500"}`}
+                />
+
+                {/* precio máx */}
+                <input
+                  type="number" min="0" placeholder="Precio máx."
+                  value={filtros.precioMax}
+                  onChange={e => cambiarFiltro("precioMax", e.target.value)}
+                  className={`w-full rounded-full px-3 py-1.5 text-sm border
+    focus:outline-none focus:ring-2 focus:ring-oferta-500 transition-colors
+    ${filtros.precioMax
+                      ? "bg-oferta-500 text-white border-oferta-500 placeholder:text-white"
+                      : "bg-white text-gray-600 border-gray-200 hover:border-oferta-500"}`}
+                />
+
+                {/* ordenar */}
+                <select
+                  value={filtros.orden}
+                  onChange={e => cambiarFiltro("orden", e.target.value)}
+                  className={`w-full rounded-full px-3 py-1.5 text-sm border cursor-pointer
+    focus:outline-none focus:ring-2 focus:ring-oferta-500 transition-colors
+    ${filtros.orden
+                      ? "bg-oferta-500 text-white border-oferta-500"
+                      : "bg-white text-gray-600 border-gray-200 hover:border-oferta-500"}`}
+                >
+                  <option value="">Ordenar por...</option>
+                  <option value="fecha_reciente">Más recientes</option>
+                  <option value="fecha_antigua">Más antiguos</option>
+                  <option value="precio_asc">Precio: menor a mayor</option>
+                  <option value="precio_desc">Precio: mayor a menor</option>
+                </select>
+
+                {/* limpiar */}
+                {hayFiltrosActivos && (
+                  <button
+                    onClick={limpiarFiltros}
+                    className="w-full rounded-full px-3 py-1.5 text-sm font-medium bg-red-50 border border-red-300 text-red-500 hover:bg-red-100 transition-colors"
+                  >
+                    Limpiar
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
+
         </div>
       </div>
 
       {/* contenido */}
-      <main className="max-w-5xl mx-auto px-4 py-8">
+      <main className="max-w-5xl mx-auto px-4 py-8 flex-1 w-full">
         {/* error */}
         {error && (
-          <div className="text-center py-20 text-red-400">
+          <div className="text-center py-32 text-red-400">
             <p>{error}</p>
           </div>
         )}
 
         {/* si no hay resultados */}
         {!error && anuncios.length === 0 && (
-          <div className="text-center py-20 text-gray-400">
+          <div className="text-center py-32 text-gray-400">
             <p>
               {filtros.nombre
                 ? "No hay anuncios que coincidan."

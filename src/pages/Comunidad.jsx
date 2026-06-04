@@ -99,20 +99,26 @@ export default function Comunidad() {
       {/* cabecera */}
       <header className="bg-white border-b border-gray-100 sticky top-0 z-10 shadow-sm">
         <NavBar />
-        <div className="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between gap-4">
-          <div>
+        <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between gap-4">
+          <div className="flex items-baseline gap-3">
             <h1 className="text-xl font-bold text-oferta-600">Comunidad</h1>
-            <p className="text-xs text-gray-400 mt-0.5">
-              Anuncia en qué frecuencia estás activo para que otros te encuentren
-            </p>
+            <span className="text-xs text-gray-400 uppercase tracking-widest hidden sm:inline">Llamadas · Radioaficionados</span>
           </div>
           {/* boton para usuarios logueados */}
-          {usuario && usuario.indicativo && (
+          {usuario && usuario.indicativo && usuario.rol !== "ROLE_ADMIN" && (
             <button
               onClick={() => setModalAbierto(true)}
-              className="bg-oferta-500 hover:bg-oferta-600 text-white font-semibold px-4 py-2 rounded-xl text-sm transition-colors whitespace-nowrap"
+              className="bg-oferta-500 hover:bg-oferta-600 text-white font-semibold px-4 py-2 rounded-xl text-sm transition-colors whitespace-nowrap hidden sm:block"
             >
               + Publicar llamada
+            </button>
+          )}
+          {usuario && usuario.indicativo && usuario.rol !== "ROLE_ADMIN" && (
+            <button
+              onClick={() => setModalAbierto(true)}
+              className="bg-oferta-500 hover:bg-oferta-600 text-white font-semibold px-3 py-2 rounded-xl text-sm transition-colors sm:hidden"
+            >
+              + Publicar
             </button>
           )}
         </div>
@@ -120,7 +126,7 @@ export default function Comunidad() {
 
       {/* pestañas */}
       <div className="bg-white border-b border-gray-100">
-        <div className="max-w-3xl mx-auto px-4 flex gap-2 py-2">
+        <div className="max-w-5xl mx-auto px-4 flex gap-2 py-2">
           {["llamadas", "buscar"].map((p) => (
             <button
               key={p}
@@ -139,7 +145,7 @@ export default function Comunidad() {
       </div>
 
       {/* contenido */}
-      <main className="max-w-3xl mx-auto px-4 py-6 flex-1 w-full min-h-[60vh]">
+      <main className="max-w-5xl mx-auto px-4 py-6 flex-1 w-full">
 
         {/* pestaña llamadas activas */}
         {pestanaActiva === "llamadas" && (
@@ -149,7 +155,7 @@ export default function Comunidad() {
             )}
 
             {/* aviso si no tiene indicativo */}
-            {usuario && !usuario.indicativo && (
+            {usuario && !usuario.indicativo && usuario.rol !== "ROLE_ADMIN" && (
               <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 text-sm text-amber-700 mb-4">
                 Necesitas añadir tu indicativo en tu{" "}
                 <span
@@ -163,7 +169,7 @@ export default function Comunidad() {
             )}
 
             {!errorLlamadas && llamadas.length === 0 && (
-              <p className="text-center text-gray-400 text-sm py-16">
+              <p className="text-center text-gray-400 text-sm py-32">
                 No hay llamadas activas en este momento.
               </p>
             )}
@@ -177,6 +183,7 @@ export default function Comunidad() {
                   tiempoRestante={tiempoRestante}
                   tiempoDesde={tiempoDesde}
                   onBorrar={handleBorrar}
+                  usuario={usuario}
                 />
               </div>
             )}
@@ -193,6 +200,7 @@ export default function Comunidad() {
                   tiempoRestante={tiempoRestante}
                   tiempoDesde={tiempoDesde}
                   onBorrar={handleBorrar}
+                  usuario={usuario}
                 />
               </div>
             ))}
@@ -234,8 +242,8 @@ export default function Comunidad() {
 
             {/* estado vacío del principio */}
             {busqueda.trim() === "" && (
-              <div className="flex flex-col items-center justify-center py-16 text-center gap-4">
-                <svg xmlns="http://www.w3.org/2000/svg" className="w-36 h-36 text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div className="flex flex-col items-center justify-center py-8 text-center gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-20 h-20 text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1}
                     d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0" />
                 </svg>
@@ -248,8 +256,8 @@ export default function Comunidad() {
 
             {/* sin resultados */}
             {!buscando && resultados.length === 0 && busqueda.trim() !== "" && (
-              <div className="flex flex-col items-center justify-center py-16 text-center gap-4">
-                <svg xmlns="http://www.w3.org/2000/svg" className="w-36 h-36 text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div className="flex flex-col items-center justify-center py-8 text-center gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-20 h-20 text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1}
                     d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0" />
                 </svg>
@@ -407,7 +415,7 @@ export default function Comunidad() {
 }
 
 // componente para las tarjetas de llamada
-function TarjetaLlamada({ llamada, esMia, tiempoRestante, tiempoDesde, onBorrar }) {
+function TarjetaLlamada({ llamada, esMia, tiempoRestante, tiempoDesde, onBorrar, usuario  }) {
   return (
     <>
       <div className="flex justify-between items-start">
@@ -438,7 +446,7 @@ function TarjetaLlamada({ llamada, esMia, tiempoRestante, tiempoDesde, onBorrar 
       </div>
 
       {llamada.mensaje && (
-        <p className="text-xs text-gray-500 italic bg-gray-50 rounded-lg px-3 py-2 mt-3">
+        <p className="text-xs text-gray-500 italic bg-gray-50 rounded-lg px-3 py-2 mt-3 break-all">
           💬 "{llamada.mensaje}"
         </p>
       )}
@@ -452,7 +460,7 @@ function TarjetaLlamada({ llamada, esMia, tiempoRestante, tiempoDesde, onBorrar 
             🕐 Publicada {tiempoDesde(llamada.fechaPublicacion)}
           </span>
         </div>
-        {esMia ? (
+        {(esMia || usuario?.rol === "ROLE_ADMIN") ? (
           <button
             onClick={() => onBorrar(llamada.id)}
             className="text-xs font-medium bg-red-50 text-red-400 border border-red-100

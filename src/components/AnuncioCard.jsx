@@ -131,7 +131,7 @@ export default function AnuncioCard({ anuncio, imagenes, onDelete, usuario, onFa
               <Star
                 className="w-6 h-6"
                 fill={favorito ? "#FBBF24" : "none"}
-                stroke={favorito ? "#FBBF24" : "currentColor"}
+                stroke={favorito ? "#FBBF24" : "#9ca3af"}
               />
             </button>
           )}

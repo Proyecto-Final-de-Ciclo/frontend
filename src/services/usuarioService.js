@@ -15,8 +15,14 @@ export const login = async (nombre, password) => {
 
   const datos = await response.json();
   localStorage.setItem("token", datos.accessToken);
-  localStorage.setItem("usuario", JSON.stringify(datos));
-  return datos;
+
+  // carga el perfil completo del usuario
+  const perfil = await fetch(`${BASE}/usuario/${datos.id}`).then(r => r.json());
+
+  // combina los datos del login con el perfil completo
+  const usuarioCompleto = { ...datos, ...perfil, rol: datos.rol };
+  localStorage.setItem("usuario", JSON.stringify(usuarioCompleto));
+  return usuarioCompleto;
 };
 
 // Borra el token y los datos del usuario

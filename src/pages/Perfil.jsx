@@ -11,8 +11,9 @@ export default function Perfil() {
 
   useEffect(() => {
     if (!usuario) navigate("/login");
+    if (usuario?.rol === "ROLE_ADMIN") navigate("/");
   }, [usuario]);
-
+  
   const [pestanaActiva, setPestanaActiva] = useState("datos");
 
   const [form, setForm] = useState({
@@ -49,12 +50,16 @@ export default function Perfil() {
   const set = (campo, valor) => setForm(prev => ({ ...prev, [campo]: valor }));
 
   const handleGuardar = async () => {
-    setGuardando(true);
     setError(null);
     setExito(false);
+    if (form.indicativo && !/^[A-Za-z]{1,3}\d[A-Za-z]{1,4}$/.test(form.indicativo)) {
+      setError("El indicativo no tiene un formato válido (ej: EA1IWS).");
+      return;
+    }
+    setGuardando(true);
     try {
       const actualizado = await editarPerfil(form);
-      login({ ...usuario, ...actualizado });
+      login({ ...usuario, ...actualizado, rol: usuario.rol });
       setExito(true);
     } catch (e) {
       setError(e.message);
@@ -95,7 +100,7 @@ export default function Perfil() {
   if (!usuario) return null;
 
   return (
-    <div className="min-h-screen bg-transparent">
+    <div className="min-h-screen bg-transparent flex flex-col">
 
       {/* cabecera */}
       <header className="bg-white border-b border-gray-100 sticky top-0 z-10 shadow-sm">
@@ -131,7 +136,7 @@ export default function Perfil() {
         </div>
       </div>
 
-      <main className="max-w-3xl mx-auto px-4 py-6">
+      <main className="max-w-3xl mx-auto px-4 py-6 flex-1 w-full">
 
         {exito && (
           <div className="bg-oferta-50 border border-oferta-200 rounded-xl px-4 py-3
@@ -386,7 +391,7 @@ export default function Perfil() {
                 <Campo label="Indicativo" siemprePublico>
                   <input
                     value={form.indicativo}
-                    onChange={(e) => set("indicativo", e.target.value)}
+                    onChange={(e) => set("indicativo", e.target.value.toUpperCase())}
                     placeholder="ej: EA1ABC"
                     className={estiloInput}
                   />

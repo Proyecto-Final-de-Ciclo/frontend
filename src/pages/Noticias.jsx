@@ -37,37 +37,39 @@ export default function Noticias() {
     };
 
     if (cargando) return (
-        <div className="min-h-screen bg-transparent">
+        <div className="min-h-screen bg-transparent flex flex-col">
             <header className="bg-white border-b border-gray-100 sticky top-0 z-10 shadow-sm">
                 <NavBar />
                 <div className="max-w-5xl mx-auto px-4 py-4">
                     <h1 className="text-xl font-bold text-oferta-600">Noticias</h1>
                 </div>
             </header>
-            <div className="flex items-center justify-center py-32 text-gray-400 text-sm">
+            <div className="flex items-center justify-center py-32 text-gray-400 text-sm flex-1">
                 Cargando noticias...
             </div>
+            <Footer />
         </div>
     );
 
     if (error) return (
-        <div className="min-h-screen bg-transparent">
+        <div className="min-h-screen bg-transparent flex flex-col">
             <header className="bg-white border-b border-gray-100 sticky top-0 z-10 shadow-sm">
                 <NavBar />
                 <div className="max-w-5xl mx-auto px-4 py-4">
                     <h1 className="text-xl font-bold text-oferta-600">Noticias</h1>
                 </div>
             </header>
-            <div className="flex items-center justify-center py-32 text-red-400 text-sm">
+            <div className="flex items-center justify-center py-32 text-red-400 text-sm flex-1">
                 {error}
             </div>
+            <Footer />
         </div>
     );
     const destacada = noticias[0];
     const resto = noticias.slice(1);
 
     return (
-        <div className="min-h-screen bg-transparent">
+        <div className="min-h-screen bg-transparent flex flex-col">
 
             {/* cabecera */}
             <header className="bg-white border-b border-gray-100 sticky top-0 z-10 shadow-sm">
@@ -76,12 +78,11 @@ export default function Noticias() {
 
                 <div className="max-w-5xl mx-auto px-4 py-4 flex items-center gap-3">
                     <h1 className="text-xl font-bold text-oferta-600">Noticias</h1>
-                    <span className="text-xs text-gray-400 uppercase tracking-widest ml-2">Radioafición · Actualidad</span>
-                </div>
+                    <span className="text-xs text-gray-400 uppercase tracking-widest ml-2 hidden sm:inline">Radioafición · Actualidad</span>                </div>
             </header>
 
             {/* contenido principal con panel lateral */}
-            <main className={`max-w-5xl mx-auto px-4 py-8 ${noticiaActiva ? "lg:h-[calc(100vh-120px)]" : ""}`}>
+            <main className={`max-w-5xl mx-auto px-4 py-8 flex-1 w-full ${noticiaActiva ? "lg:h-[calc(100vh-120px)]" : ""}`}>
                 <div className={`flex flex-col lg:flex-row gap-6 ${noticiaActiva ? "lg:h-full" : ""}`}>
 
                     {/* panel izquierdo */}

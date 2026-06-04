@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
   /* Azul marino RadiOferta */
@@ -28,4 +29,98 @@ body {
     #fff4ec 100%   /* naranja muy claro */
   );
   background-attachment: fixed; /* el degradado no se mueve al hacer scroll */
+}
+
+/* ── Modo oscuro global ── */
+.dark body {
+  background: linear-gradient(
+    160deg,
+    #0f1729 0%,
+    #1a1d2e 40%,
+    #1c1510 100%
+  );
+}
+
+/* fondos */
+.dark .bg-white { background-color: #111827 !important; }
+.dark .bg-gray-50 { background-color: #1f2937 !important; }
+.dark .bg-gray-100 { background-color: #374151 !important; }
+
+/* textos */
+.dark .text-gray-800 { color: #f3f4f6 !important; }
+.dark .text-gray-700 { color: #e5e7eb !important; }
+.dark .text-gray-600 { color: #d1d5db !important; }
+.dark .text-gray-500 { color: #9ca3af !important; }
+.dark .text-gray-400 { color: #6b7280 !important; }
+
+/* bordes */
+.dark .border-gray-100 { border-color: #374151 !important; }
+.dark .border-gray-200 { border-color: #4b5563 !important; }
+.dark .border-gray-50 { border-color: #1f2937 !important; }
+
+/* hover */
+.dark .hover\:bg-gray-50:hover { background-color: #1f2937 !important; }
+.dark .hover\:bg-gray-100:hover { background-color: #374151 !important; }
+.dark .hover\:bg-gray-200:hover { background-color: #4b5563 !important; }
+
+/* inputs y selects */
+.dark input, .dark select, .dark textarea {
+  background-color: #1f2937 !important;
+  color: #e5e7eb !important;
+  border-color: #4b5563 !important;
+}
+.dark input::placeholder, .dark textarea::placeholder {
+  color: #6b7280 !important;
+}
+
+/* sombras */
+.dark .shadow-sm { box-shadow: 0 1px 2px rgba(0,0,0,0.3) !important; }
+.dark .shadow-lg { box-shadow: 0 4px 12px rgba(0,0,0,0.4) !important; }
+.dark .shadow-xl { box-shadow: 0 8px 24px rgba(0,0,0,0.5) !important; }
+
+/* ── Modo oscuro — parches adicionales ── */
+
+/* textos extra */
+.dark .text-gray-300 { color: #4b5563 !important; }
+.dark .text-marino-500 { color: #93c5fd !important; }
+
+/* fondos coloreados */
+.dark .bg-oferta-50 { background-color: #3b2000 !important; }
+.dark .bg-red-50 { background-color: #3b1111 !important; }
+.dark .bg-amber-50 { background-color: #3b2e00 !important; }
+.dark .bg-purple-50 { background-color: #2d1f5e !important; }
+
+/* hover coloreados */
+.dark .hover\:bg-oferta-50:hover { background-color: #3b2000 !important; }
+.dark .hover\:bg-red-50:hover { background-color: #3b1111 !important; }
+.dark .hover\:bg-red-100:hover { background-color: #5c1d1d !important; }
+.dark .hover\:bg-oferta-100:hover { background-color: #5c3500 !important; }
+
+/* textos sobre fondos coloreados */
+.dark .text-oferta-600 { color: #ff9a40 !important; }
+.dark .text-red-400 { color: #f87171 !important; }
+.dark .text-red-500 { color: #ef4444 !important; }
+.dark .text-red-600 { color: #f87171 !important; }
+.dark .text-amber-700 { color: #fbbf24 !important; }
+.dark .text-purple-600 { color: #a78bfa !important; }
+
+/* bordes coloreados */
+.dark .border-oferta-200 { border-color: #5c3500 !important; }
+.dark .border-red-200 { border-color: #5c1d1d !important; }
+.dark .border-red-300 { border-color: #7f2d2d !important; }
+.dark .border-red-100 { border-color: #3b1111 !important; }
+.dark .border-amber-200 { border-color: #5c4a00 !important; }
+.dark .border-oferta-100 { border-color: #3b2000 !important; }
+
+/* iconos SVG que heredan negro */
+.dark .text-gray-200 { color: #4b5563 !important; }
+.dark svg { color: inherit; }
+
+/* "Sin imagen" placeholder */
+.dark .bg-gray-50 svg { color: #6b7280; }
+
+/* select options (Chrome) */
+.dark select option {
+  background-color: #1f2937;
+  color: #e5e7eb;
 }

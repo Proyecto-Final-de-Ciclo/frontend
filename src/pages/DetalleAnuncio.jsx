@@ -99,7 +99,7 @@ export default function DetalleAnuncio() {
 
   // pantalla detalle
   return (
-    <div className="min-h-screen bg-transparent">
+    <div className="min-h-screen bg-transparent flex flex-col">
 
       {/* imagen ampliada */}
       {imagenAmpliada && (
@@ -122,7 +122,7 @@ export default function DetalleAnuncio() {
       </header>
 
       {/* detalle */}
-      <main className="max-w-2xl mx-auto px-4 py-8">
+      <main className="max-w-2xl mx-auto px-4 py-8 flex-1 w-full">
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
 
           {/* imágenes */}
@@ -194,7 +194,7 @@ export default function DetalleAnuncio() {
                     <Star
                       className="w-6 h-6"
                       fill={favorito ? "#FBBF24" : "none"}
-                      stroke={favorito ? "#FBBF24" : "currentColor"}
+                      stroke={favorito ? "#FBBF24" : "#9ca3af"}
                     />
                   </button>
                 )}

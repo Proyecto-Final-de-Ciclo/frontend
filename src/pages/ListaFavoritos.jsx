@@ -62,25 +62,25 @@ export default function ListaFavoritos() {
       </header>
 
       {/* contenido */}
-      <main className="max-w-5xl mx-auto px-4 py-8 flex-1 w-full">
+      <main className="max-w-5xl mx-auto px-4 py-8 flex-1 w-full flex flex-col">
 
         {/* cargando */}
         {cargando && (
-          <div className="text-center py-20 text-gray-400">
+          <div className="flex-1 flex items-center justify-center text-gray-400">
             Cargando...
           </div>
         )}
 
         {/* error */}
         {error && (
-          <div className="text-center py-20 text-red-400">
+          <div className="flex-1 flex items-center justify-center text-red-400">
             <p>{error}</p>
           </div>
         )}
 
         {/* sin favoritos */}
         {!cargando && !error && favoritos.length === 0 && (
-          <div className="text-center py-20 text-gray-400">
+          <div className="flex-1 flex items-center justify-center text-red-400">
             <p>Todavía no tienes anuncios guardados.</p>
             <button
               onClick={() => navigate("/")}

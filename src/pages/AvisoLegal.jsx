@@ -8,7 +8,7 @@ export default function AvisoLegal() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col min-h-screen bg-transparent flex flex-col">
+    <div className="min-h-screen bg-transparent flex flex-col">
 
       {/* cabecera */}
       <header className="bg-white border-b border-gray-100 shadow-sm">

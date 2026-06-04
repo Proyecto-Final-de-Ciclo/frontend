@@ -1,7 +1,7 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { useUsuario } from "../context/UsuarioContext";
 import { useState, useEffect } from "react";
-import { User, Tag, Star, Menu, X } from "lucide-react";
+import { User, Tag, Star, Menu, X, Moon, Sun } from "lucide-react";
 import logo from "../assets/logo.png";
 
 export default function NavBar() {
@@ -48,8 +48,23 @@ export default function NavBar() {
         { ruta: "/categorias/gestion", texto: "Categorías" },
     ];
 
+    const [tema, setTema] = useState(() => {
+        return localStorage.getItem("tema") || "claro";
+    });
+
+    useEffect(() => {
+        if (tema === "oscuro") {
+            document.documentElement.classList.add("dark");
+        } else {
+            document.documentElement.classList.remove("dark");
+        }
+        localStorage.setItem("tema", tema);
+    }, [tema]);
+
+    const toggleTema = () => setTema(prev => prev === "claro" ? "oscuro" : "claro");
+
     return (
-        <div className="border-b border-gray-100 relative">
+        <div className="border-b border-gray-100 relative z-50 bg-white">
             <div className="max-w-5xl mx-auto px-4">
 
                 {/* ordenador */}
@@ -83,6 +98,13 @@ export default function NavBar() {
 
                     {/* usuario */}
                     <div className="flex-1 flex items-center justify-end gap-2 pb-2">
+                        <button
+                            onClick={toggleTema}
+                            className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                            aria-label="Cambiar tema"
+                        >
+                            {tema === "claro" ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
+                        </button>
                         {usuario ? (
                             <div className="relative menu-usuario">
                                 <button
@@ -99,12 +121,14 @@ export default function NavBar() {
                                             <p className="text-sm font-semibold text-gray-800">{usuario.nombre}</p>
                                             <p className="text-xs text-gray-400 truncate">{usuario.email}</p>
                                         </div>
-                                        <button
-                                            onClick={() => { setMenuAbierto(false); navigate("/perfil"); }}
-                                            className="w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-2"
-                                        >
-                                            <User className="w-4 h-4 text-oferta-500" />Mi perfil
-                                        </button>
+                                        {usuario.rol !== "ROLE_ADMIN" && (
+                                            <button
+                                                onClick={() => { setMenuAbierto(false); navigate("/perfil"); }}
+                                                className="w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-2"
+                                            >
+                                                <User className="w-4 h-4 text-oferta-500" />Mi perfil
+                                            </button>
+                                        )}
                                         {usuario.rol !== "ROLE_ADMIN" && (
                                             <button
                                                 onClick={() => { setMenuAbierto(false); navigate("/mis-anuncios"); }}
@@ -146,6 +170,7 @@ export default function NavBar() {
                 </div>
 
                 {/* móvil y tablet */}
+                {/* móvil y tablet */}
                 <div className="flex lg:hidden items-center justify-between py-2">
                     <button
                         onClick={() => navigate("/")}
@@ -156,13 +181,22 @@ export default function NavBar() {
                             className="h-9 w-auto hover:opacity-80 transition-opacity" />
                     </button>
 
-                    <button
-                        onClick={() => setMenuMovil(prev => !prev)}
-                        aria-label={menuMovil ? "Cerrar menú" : "Abrir menú"}
-                        className="p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors"
-                    >
-                        {menuMovil ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-                    </button>
+                    <div className="flex items-center gap-1">
+                        <button
+                            onClick={toggleTema}
+                            className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                            aria-label="Cambiar tema"
+                        >
+                            {tema === "claro" ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
+                        </button>
+                        <button
+                            onClick={() => setMenuMovil(prev => !prev)}
+                            aria-label={menuMovil ? "Cerrar menú" : "Abrir menú"}
+                            className="p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors"
+                        >
+                            {menuMovil ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -171,7 +205,7 @@ export default function NavBar() {
                 <>
                     {/* fondo oscuro que al tocar cierra el menu */}
                     <div
-                        className="lg:hidden fixed inset-0 bg-black/30 z-40"
+                        className="lg:hidden absolute top-full left-0 right-0 h-screen bg-black/30 z-40"
                         onClick={() => setMenuMovil(false)}
                     />
 
@@ -208,10 +242,14 @@ export default function NavBar() {
                                     </div>
                                 </div>
 
-                                <button onClick={() => navigate("/perfil")}
-                                    className="w-full text-left px-3 py-2.5 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-colors flex items-center gap-2">
-                                    <User className="w-4 h-4 text-oferta-500" />Mi perfil
-                                </button>
+                                {usuario.rol !== "ROLE_ADMIN" && (
+                                    <button
+                                        onClick={() => { setMenuAbierto(false); navigate("/perfil"); }}
+                                        className="w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-2"
+                                    >
+                                        <User className="w-4 h-4 text-oferta-500" />Mi perfil
+                                    </button>
+                                )}
                                 {usuario.rol !== "ROLE_ADMIN" && (
                                     <button onClick={() => navigate("/mis-anuncios")}
                                         className="w-full text-left px-3 py-2.5 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-colors flex items-center gap-2">

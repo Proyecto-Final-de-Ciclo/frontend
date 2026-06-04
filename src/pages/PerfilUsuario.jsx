@@ -142,7 +142,7 @@ export default function PerfilUsuario() {
     const puedeReseñar = usuario && usuario.id !== Number(id);
 
     if (cargando) return (
-        <div className="min-h-screen bg-transparent flex items-center justify-center text-gray-400">
+        <div className="min-h-screen bg-transparent flex flex-col items-center justify-center text-gray-400">
             Cargando...
         </div>
     );
@@ -284,7 +284,7 @@ export default function PerfilUsuario() {
                     </h3>
 
                     {anuncios.length === 0 ? (
-                        <div className="text-center py-16 text-gray-400">
+                        <div className="text-center py-32 text-gray-400">
                             <p>Este usuario no tiene anuncios publicados.</p>
                         </div>
                     ) : (
@@ -367,7 +367,7 @@ export default function PerfilUsuario() {
                     )}
 
                     {reseñas.length === 0 ? (
-                        <div className="text-center py-10 text-gray-400">
+                        <div className="text-center py-32 text-gray-400">
                             <p>Este vendedor no tiene reseñas todavía.</p>
                         </div>
                     ) : (

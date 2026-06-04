@@ -165,7 +165,7 @@ export default function FormularioAnuncio() {
 
   // pantalla formulario
   return (
-    <div className="min-h-screen bg-transparent">
+    <div className="min-h-screen bg-transparent flex flex-col">
       {/* imagen ampliada */}
       {imagenAmpliada && (
         <div
@@ -192,7 +192,7 @@ export default function FormularioAnuncio() {
       </header>
 
       {/* formulario */}
-      <main className="max-w-2xl mx-auto px-4 py-8">
+      <main className="max-w-2xl mx-auto px-4 py-8 flex-1 w-full">
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
           {/* mensaje de error */}
           {error && (
