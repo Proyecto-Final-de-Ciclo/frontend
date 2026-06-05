@@ -3,6 +3,7 @@ import { useUsuario } from "../context/UsuarioContext";
 import { useState, useEffect } from "react";
 import { User, Tag, Star, Menu, X, Moon, Sun } from "lucide-react";
 import logo from "../assets/logo.png";
+import logoDark from "../assets/logooscuro.png";
 
 export default function NavBar() {
     const navigate = useNavigate();
@@ -77,8 +78,8 @@ export default function NavBar() {
                             aria-label="Ir a la página principal"
                             className="shrink-0 focus:outline-none"
                         >
-                            <img src={logo} alt="RadiOferta"
-                                className="h-11 w-auto hover:opacity-80 transition-opacity" />
+                            <img src={tema === "oscuro" ? logoDark : logo} alt="RadiOferta"
+                                className="h-9 w-auto hover:opacity-80 transition-opacity" />
                         </button>
                     </div>
 
@@ -177,8 +178,8 @@ export default function NavBar() {
                         aria-label="Ir a la página principal"
                         className="shrink-0 focus:outline-none"
                     >
-                        <img src={logo} alt="RadiOferta"
-                            className="h-9 w-auto hover:opacity-80 transition-opacity" />
+                        <img src={tema === "oscuro" ? logoDark : logo} alt="RadiOferta"
+                            className="h-11 w-auto hover:opacity-80 transition-opacity" />
                     </button>
 
                     <div className="flex items-center gap-1">
