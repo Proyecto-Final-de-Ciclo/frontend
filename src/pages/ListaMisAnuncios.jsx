@@ -52,14 +52,14 @@ export default function ListaMisAnuncios() {
       <header className="bg-white border-b border-gray-100 sticky top-0 z-10 shadow-sm">
         <div className="max-w-5xl mx-auto px-4 py-4 flex items-center gap-4">
           <BotonVolver to="/" />
-          <h1 className="text-xl font-bold text-oferta-600 flex items-center gap-2">
+          <h1 className="text-xl font-bold text-naranja-600 flex items-center gap-2">
             <Tag className="w-5 h-5" />
             Mis anuncios
           </h1>
           {/* publicar */}
           <button
             onClick={() => navigate("/anuncio/nuevo")}
-            className="ml-auto bg-oferta-500 hover:bg-oferta-600 text-white font-semibold px-4 py-2 rounded-xl text-sm transition-colors whitespace-nowrap"
+            className="ml-auto bg-naranja-500 hover:bg-naranja-600 text-white font-semibold px-4 py-2 rounded-xl text-sm transition-colors whitespace-nowrap"
           >
             + Publicar
           </button>
@@ -81,7 +81,7 @@ export default function ListaMisAnuncios() {
             <p>Todavía no tienes anuncios publicados.</p>
             <button
               onClick={() => navigate("/anuncio/nuevo")}
-              className="mt-4 text-oferta-600 underline text-sm"
+              className="mt-4 text-naranja-600 underline text-sm"
             >
               Publicar mi primer anuncio
             </button>

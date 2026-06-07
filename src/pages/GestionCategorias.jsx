@@ -96,12 +96,12 @@ export default function GestionCategorias() {
                         value={nuevaNombre}
                         onChange={(e) => setNuevaNombre(e.target.value)}
                         onKeyDown={(e) => e.key === "Enter" && handleCrear()}
-                        className="flex-1 border border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-oferta-500"
+                        className="flex-1 border border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-naranja-500"
                     />
                     <button
                         onClick={handleCrear}
                         disabled={creando || !nuevaNombre.trim()}
-                        className="bg-oferta-500 hover:bg-oferta-600 disabled:opacity-50 text-white font-semibold px-4 py-2 rounded-xl text-sm transition-colors whitespace-nowrap"
+                        className="bg-naranja-500 hover:bg-naranja-600 disabled:opacity-50 text-white font-semibold px-4 py-2 rounded-xl text-sm transition-colors whitespace-nowrap"
                     >
                         {creando ? "Creando..." : "+ Crear"}
                     </button>
@@ -137,12 +137,12 @@ export default function GestionCategorias() {
                                                 value={editando.nombre}
                                                 onChange={(e) => setEditando(prev => ({ ...prev, nombre: e.target.value }))}
                                                 onKeyDown={(e) => e.key === "Enter" && handleEditar()}
-                                                className="flex-1 border border-gray-200 rounded-xl px-4 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-oferta-500"
+                                                className="flex-1 border border-gray-200 rounded-xl px-4 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-naranja-500"
                                                 autoFocus
                                             />
                                             <button
                                                 onClick={handleEditar}
-                                                className="text-sm bg-oferta-500 hover:bg-oferta-600 text-white font-medium px-3 py-1.5 rounded-lg transition-colors"
+                                                className="text-sm bg-naranja-500 hover:bg-naranja-600 text-white font-medium px-3 py-1.5 rounded-lg transition-colors"
                                             >
                                                 Guardar
                                             </button>

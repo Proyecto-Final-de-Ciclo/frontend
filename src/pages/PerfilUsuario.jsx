@@ -150,7 +150,7 @@ export default function PerfilUsuario() {
     if (error) return (
         <div className="min-h-screen bg-transparent flex flex-col items-center justify-center text-red-400 gap-4">
             <p>{error}</p>
-            <button onClick={() => navigate("/")} className="text-oferta-600 underline text-sm">
+            <button onClick={() => navigate("/")} className="text-naranja-600 underline text-sm">
                 Volver a los anuncios
             </button>
         </div>
@@ -163,7 +163,7 @@ export default function PerfilUsuario() {
             <header className="bg-white border-b border-gray-100 sticky top-0 z-10 shadow-sm">
                 <div className="max-w-5xl mx-auto px-4 py-4 flex items-center gap-3">
                     <BotonVolver />
-                    <h1 className="text-xl font-bold text-oferta-600">Perfil del vendedor</h1>
+                    <h1 className="text-xl font-bold text-naranja-600">Perfil del vendedor</h1>
                 </div>
             </header>
 
@@ -173,8 +173,8 @@ export default function PerfilUsuario() {
                 <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex flex-col sm:flex-row items-center sm:items-center gap-4 sm:gap-6">
 
                     {/* avatar con inicial del nombre */}
-                    <div className="w-16 h-16 rounded-full bg-oferta-100 flex items-center justify-center shrink-0">
-                        <span className="text-2xl font-bold text-oferta-600">
+                    <div className="w-16 h-16 rounded-full bg-naranja-100 flex items-center justify-center shrink-0">
+                        <span className="text-2xl font-bold text-naranja-600">
                             {perfil.nombre.charAt(0).toUpperCase()}
                         </span>
                     </div>
@@ -182,7 +182,7 @@ export default function PerfilUsuario() {
                     {/* datos usuario */}
                     <div className="flex flex-col gap-1 text-center sm:text-left">
                         <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
-                            <User className="w-4 h-4 text-oferta-500" />
+                            <User className="w-4 h-4 text-naranja-500" />
                             {perfil.nombre}
                         </h2>
                         {perfil.fechaRegistro && (
@@ -224,7 +224,7 @@ export default function PerfilUsuario() {
                         {esPropietario && (
                             <button
                                 onClick={() => setEditandoPerfil(prev => !prev)}
-                                className="mt-3 bg-oferta-500 hover:bg-oferta-600 text-white font-semibold px-3 py-1.5 rounded-lg text-xs transition-colors"
+                                className="mt-3 bg-naranja-500 hover:bg-naranja-600 text-white font-semibold px-3 py-1.5 rounded-lg text-xs transition-colors"
                             >
                                 {editandoPerfil ? "Cancelar" : "Editar perfil"}
                             </button>
@@ -238,14 +238,14 @@ export default function PerfilUsuario() {
                                     placeholder="Indicativo (ej: EA1ABC)"
                                     value={formPerfil.indicativo}
                                     onChange={(e) => setFormPerfil(prev => ({ ...prev, indicativo: e.target.value }))}
-                                    className="border border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-oferta-500"
+                                    className="border border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-naranja-500"
                                 />
                                 <input
                                     type="text"
                                     placeholder="Localización (ej: Madrid)"
                                     value={formPerfil.localizacion}
                                     onChange={(e) => setFormPerfil(prev => ({ ...prev, localizacion: e.target.value }))}
-                                    className="border border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-oferta-500"
+                                    className="border border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-naranja-500"
                                 />
                                 <textarea
                                     placeholder="Descripción..."
@@ -253,14 +253,14 @@ export default function PerfilUsuario() {
                                     onChange={(e) => setFormPerfil(prev => ({ ...prev, descripcion: e.target.value }))}
                                     rows={3}
                                     maxLength={300}
-                                    className="border border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-oferta-500 resize-none"
+                                    className="border border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-naranja-500 resize-none"
                                 />
                                 <label className="flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
                                     <input
                                         type="checkbox"
                                         checked={formPerfil.mostrarEmail}
                                         onChange={(e) => setFormPerfil(prev => ({ ...prev, mostrarEmail: e.target.checked }))}
-                                        className="accent-oferta-500"
+                                        className="accent-naranja-500"
                                     />
                                     Mostrar mi email públicamente
                                 </label>
@@ -268,7 +268,7 @@ export default function PerfilUsuario() {
                                 <button
                                     onClick={handleGuardarPerfil}
                                     disabled={guardando}
-                                    className="bg-oferta-500 hover:bg-oferta-600 text-white font-semibold px-5 py-2 rounded-xl text-sm transition-colors disabled:opacity-50"
+                                    className="bg-naranja-500 hover:bg-naranja-600 text-white font-semibold px-5 py-2 rounded-xl text-sm transition-colors disabled:opacity-50"
                                 >
                                     {guardando ? "Guardando..." : "Guardar cambios"}
                                 </button>
@@ -317,7 +317,7 @@ export default function PerfilUsuario() {
                                 }}
                                 className={panelAbierto
                                     ? "bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold px-4 py-2 rounded-xl text-sm transition-colors"
-                                    : "bg-oferta-500 hover:bg-oferta-600 text-white font-semibold px-4 py-2 rounded-xl text-sm transition-colors"
+                                    : "bg-naranja-500 hover:bg-naranja-600 text-white font-semibold px-4 py-2 rounded-xl text-sm transition-colors"
                                 }
                             >
                                 {panelAbierto ? "Cancelar" : "Añadir reseña"}
@@ -333,7 +333,7 @@ export default function PerfilUsuario() {
                                         placeholder="Comentario opcional..."
                                         maxLength={500}
                                         rows={3}
-                                        className="w-full mt-3 border border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-oferta-500 resize-none"
+                                        className="w-full mt-3 border border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-naranja-500 resize-none"
                                     />
                                     {errorReseña && <p className="text-xs text-red-400 mt-1">{errorReseña}</p>}
                                     <button
@@ -357,7 +357,7 @@ export default function PerfilUsuario() {
                                             }
                                         }}
                                         disabled={enviando}
-                                        className="mt-3 bg-oferta-500 hover:bg-oferta-600 text-white font-semibold px-5 py-2 rounded-xl text-sm transition-colors disabled:opacity-50"
+                                        className="mt-3 bg-naranja-500 hover:bg-naranja-600 text-white font-semibold px-5 py-2 rounded-xl text-sm transition-colors disabled:opacity-50"
                                     >
                                         {enviando ? "Enviando..." : "Publicar reseña"}
                                     </button>
@@ -376,8 +376,8 @@ export default function PerfilUsuario() {
                                 <div key={reseña.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center gap-3">
-                                            <div className="w-8 h-8 rounded-full bg-oferta-100 flex items-center justify-center shrink-0">
-                                                <span className="text-sm font-bold text-oferta-600">
+                                            <div className="w-8 h-8 rounded-full bg-naranja-100 flex items-center justify-center shrink-0">
+                                                <span className="text-sm font-bold text-naranja-600">
                                                     {reseña.autor.nombre.charAt(0).toUpperCase()}
                                                 </span>
                                             </div>

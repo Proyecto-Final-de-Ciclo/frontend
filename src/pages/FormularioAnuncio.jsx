@@ -219,14 +219,14 @@ export default function FormularioAnuncio() {
                         ? URL.createObjectURL(imagenPrincipal)
                         : `${import.meta.env.VITE_APP_BACKEND}/files/${imagenesActuales.find(img => img.esPrincipal).url}`}
                       alt="principal"
-                      className="h-32 w-32 object-cover rounded-xl ring-4 ring-oferta-500 cursor-pointer hover:opacity-90"
+                      className="h-32 w-32 object-cover rounded-xl ring-4 ring-naranja-500 cursor-pointer hover:opacity-90"
                       onClick={() => setImagenAmpliada(
                         imagenPrincipal
                           ? URL.createObjectURL(imagenPrincipal)
                           : `${import.meta.env.VITE_APP_BACKEND}/files/${imagenesActuales.find(img => img.esPrincipal).url}`
                       )}
                     />
-                    <span className="absolute bottom-1 left-1 bg-oferta-500 text-white text-xs px-1.5 py-0.5 rounded-full">
+                    <span className="absolute bottom-1 left-1 bg-naranja-500 text-white text-xs px-1.5 py-0.5 rounded-full">
                       {imagenPrincipal && esEdicion ? "Nueva" : "Principal"}
                     </span>
                   </div>
@@ -337,7 +337,7 @@ export default function FormularioAnuncio() {
                 value={form.nombre}
                 onChange={handleChange}
                 placeholder="Ej: Walkie Talkie Motorola"
-                className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-oferta-500"
+                className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-naranja-500"
               />
             </div>
 
@@ -354,7 +354,7 @@ export default function FormularioAnuncio() {
                 value={form.precio}
                 onChange={handleChange}
                 placeholder="0.00"
-                className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-oferta-500"
+                className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-naranja-500"
               />
             </div>
 
@@ -368,7 +368,7 @@ export default function FormularioAnuncio() {
                 value={form.estado}
                 onChange={handleChange}
                 style={{ color: form.estado === "" ? "#9ca3af" : "inherit" }}
-                className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-oferta-500"
+                className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-naranja-500"
               >
                 <option value="" disabled hidden>Selecciona un estado...</option>
                 {ESTADOS.map((e) => (
@@ -387,7 +387,7 @@ export default function FormularioAnuncio() {
                 value={form.categoriaId}
                 onChange={handleChange}
                 style={{ color: form.estado === "" ? "#9ca3af" : "inherit" }}
-                className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-oferta-500"
+                className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-naranja-500"
               >
                 <option value="">Selecciona una categoría</option>
                 {categorias.map(cat => (
@@ -406,7 +406,7 @@ export default function FormularioAnuncio() {
                   type="button"
                   onClick={handleGenerarDescripcion}
                   disabled={generandoIA}
-                  className="text-xs bg-oferta-50 hover:bg-oferta-100 disabled:opacity-50 disabled:cursor-not-allowed text-oferta-600 font-medium px-3 py-1 rounded-lg transition-colors"
+                  className="text-xs bg-naranja-50 hover:bg-naranja-100 disabled:opacity-50 disabled:cursor-not-allowed text-naranja-600 font-medium px-3 py-1 rounded-lg transition-colors"
                 >
                   {generandoIA ? "Generando..." : "✨ Generar con IA"}
                 </button>
@@ -417,7 +417,7 @@ export default function FormularioAnuncio() {
                 onChange={handleChange}
                 placeholder="Describe el artículo..."
                 rows={4}
-                className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-oferta-500 resize-none"
+                className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-naranja-500 resize-none"
               />
             </div>
           </div>
@@ -437,7 +437,7 @@ export default function FormularioAnuncio() {
             <button
               onClick={handleSubmit}
               disabled={cargando}
-              className="flex-1 bg-oferta-500 hover:bg-oferta-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium py-3 rounded-xl transition-colors"
+              className="flex-1 bg-naranja-500 hover:bg-naranja-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium py-3 rounded-xl transition-colors"
             >
               {cargando ? (
                 esEdicion ? "Guardando..." : "Publicando..."

@@ -4,7 +4,7 @@ export default function Footer() {
   const navigate = useNavigate();
 
   return (
-    <footer className="bg-gray-900 mt-auto">
+    <footer className="bg-marino-700 mt-auto">
       <div className="max-w-5xl mx-auto px-6 py-4">
 
         {/* tres columnas compactas */}

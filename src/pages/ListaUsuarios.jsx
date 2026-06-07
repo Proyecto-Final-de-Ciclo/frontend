@@ -75,7 +75,7 @@ export default function ListaUsuarios() {
             placeholder="Buscar por nombre o email..."
             value={busqueda}
             onChange={handleBusqueda}
-            className="flex-1 border border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-oferta-500"
+            className="flex-1 border border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-naranja-500"
           />
         </div>
       </header>
@@ -92,7 +92,7 @@ export default function ListaUsuarios() {
                 <input
                   value={editando.nombre}
                   onChange={e => setEditando({ ...editando, nombre: e.target.value })}
-                  className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-oferta-500"
+                  className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-naranja-500"
                 />
               </div>
               <div>
@@ -101,7 +101,7 @@ export default function ListaUsuarios() {
                   type="email"
                   value={editando.email}
                   onChange={e => setEditando({ ...editando, email: e.target.value })}
-                  className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-oferta-500"
+                  className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-naranja-500"
                 />
               </div>
               <div>
@@ -109,7 +109,7 @@ export default function ListaUsuarios() {
                 <select
                   value={editando.rol}
                   onChange={e => setEditando({ ...editando, rol: e.target.value })}
-                  className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-oferta-500"
+                  className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-naranja-500"
                 >
                   <option value="USER">Usuario</option>
                   <option value="ADMIN">Administrador</option>
@@ -126,7 +126,7 @@ export default function ListaUsuarios() {
               </button>
               <button
                 onClick={handleSaveEdit}
-                className="flex-1 bg-oferta-500 hover:bg-oferta-600 text-white font-medium py-2.5 rounded-xl transition-colors"
+                className="flex-1 bg-naranja-500 hover:bg-naranja-600 text-white font-medium py-2.5 rounded-xl transition-colors"
               >
                 Guardar
               </button>
@@ -171,7 +171,7 @@ export default function ListaUsuarios() {
                     <span className={`text-xs font-medium px-2 py-0.5 rounded-full
                       ${u.rol === "ADMIN"
                         ? "bg-purple-50 text-purple-600"
-                        : "bg-oferta-50 text-oferta-600"}`}
+                        : "bg-naranja-50 text-naranja-600"}`}
                     >
                       {u.rol === "ADMIN" ? "Administrador" : "Usuario"}
                     </span>

@@ -90,7 +90,7 @@ export default function DetalleAnuncio() {
       <p>{error || "Anuncio no encontrado"}</p>
       <button
         onClick={() => navigate("/")}
-        className="text-oferta-600 underline text-sm"
+        className="text-naranja-600 underline text-sm"
       >
         Volver a la lista
       </button>
@@ -166,7 +166,7 @@ export default function DetalleAnuncio() {
                       <button
                         key={i}
                         onClick={() => setIndiceImagen(i)}
-                        className={`w-2 h-2 rounded-full transition-colors ${i === indiceImagen ? "bg-oferta-500" : "bg-white/70"
+                        className={`w-2 h-2 rounded-full transition-colors ${i === indiceImagen ? "bg-naranja-500" : "bg-white/70"
                           }`}
                       />
                     ))}
@@ -181,7 +181,7 @@ export default function DetalleAnuncio() {
             <div className="flex justify-between items-center gap-4">
               <h2 className="text-2xl font-bold text-gray-800">{anuncio.nombre}</h2>
               <div className="flex items-center gap-3">
-                <p className="text-2xl font-bold text-oferta-600">
+                <p className="text-2xl font-bold text-naranja-600">
                   {Number(anuncio.precio).toFixed(2)} €
                 </p>
                 {(!usuario || anuncio.usuario?.id !== usuario.id) && (
@@ -203,7 +203,7 @@ export default function DetalleAnuncio() {
 
             {/* estado y fecha de publicación */}
             <div className="flex gap-3 mt-3">
-              <span className="text-xs bg-oferta-50 text-oferta-600 font-medium px-3 py-1 rounded-full">
+              <span className="text-xs bg-naranja-50 text-naranja-600 font-medium px-3 py-1 rounded-full">
                 {etiquetaEstado(anuncio.estado)}
               </span>
               <span className="text-xs text-gray-400 self-center">
@@ -213,7 +213,7 @@ export default function DetalleAnuncio() {
 
             {anuncio.usuario && (
               <p
-                className="text-sm text-gray-500 mt-2 cursor-pointer hover:text-oferta-600 transition-colors"
+                className="text-sm text-gray-500 mt-2 cursor-pointer hover:text-naranja-600 transition-colors"
                 onClick={() => navigate(`/usuario/${anuncio.usuario.id}`)}
               >
                 Vendedor: <span className="font-medium">{anuncio.usuario.nombre}</span>

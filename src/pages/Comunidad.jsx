@@ -101,14 +101,14 @@ export default function Comunidad() {
         <NavBar />
         <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between gap-4">
           <div className="flex items-baseline gap-3">
-            <h1 className="text-xl font-bold text-oferta-600">Comunidad</h1>
+            <h1 className="text-xl font-bold text-naranja-600">Comunidad</h1>
             <span className="text-xs text-gray-400 uppercase tracking-widest hidden sm:inline">Llamadas · Radioaficionados</span>
           </div>
           {/* boton para usuarios logueados */}
           {usuario && usuario.indicativo && usuario.rol !== "ROLE_ADMIN" && (
             <button
               onClick={() => setModalAbierto(true)}
-              className="bg-oferta-500 hover:bg-oferta-600 text-white font-semibold px-4 py-2 rounded-xl text-sm transition-colors whitespace-nowrap hidden sm:block"
+              className="bg-naranja-500 hover:bg-naranja-600 text-white font-semibold px-4 py-2 rounded-xl text-sm transition-colors whitespace-nowrap hidden sm:block"
             >
               + Publicar llamada
             </button>
@@ -116,7 +116,7 @@ export default function Comunidad() {
           {usuario && usuario.indicativo && usuario.rol !== "ROLE_ADMIN" && (
             <button
               onClick={() => setModalAbierto(true)}
-              className="bg-oferta-500 hover:bg-oferta-600 text-white font-semibold px-3 py-2 rounded-xl text-sm transition-colors sm:hidden"
+              className="bg-naranja-500 hover:bg-naranja-600 text-white font-semibold px-3 py-2 rounded-xl text-sm transition-colors sm:hidden"
             >
               + Publicar
             </button>
@@ -133,8 +133,8 @@ export default function Comunidad() {
               onClick={() => setPestanaActiva(p)}
               className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-colors
                 ${pestanaActiva === p
-                  ? "bg-oferta-500 text-white border-oferta-500"
-                  : "bg-white text-gray-500 border-gray-200 hover:border-oferta-200"
+                  ? "bg-naranja-500 text-white border-naranja-500"
+                  : "bg-white text-gray-500 border-gray-200 hover:border-naranja-200"
                 }`}
             >
               {p === "llamadas" && "Llamadas activas"}
@@ -169,14 +169,14 @@ export default function Comunidad() {
             )}
 
             {!errorLlamadas && llamadas.length === 0 && (
-              <p className="text-center text-gray-400 text-sm py-32">
-                No hay llamadas activas en este momento.
-              </p>
-            )}
+  <p className="text-center text-gray-400 text-sm py-12">
+    No hay llamadas activas en este momento.
+  </p>
+)}
 
             {/* llamada propia */}
             {miLlamada && (
-              <div className="bg-white border-2 border-oferta-200 rounded-2xl p-4 mb-3 shadow-sm">
+              <div className="bg-white border-2 border-naranja-200 rounded-2xl p-4 mb-3 shadow-sm">
                 <TarjetaLlamada
                   llamada={miLlamada}
                   esMia={true}
@@ -232,7 +232,7 @@ export default function Comunidad() {
                   }
                 }}
                 className="flex-1 border border-gray-200 rounded-full px-4 py-2 text-sm
-                  focus:outline-none focus:ring-2 focus:ring-oferta-500"
+                  focus:outline-none focus:ring-2 focus:ring-naranja-500"
               />
             </div>
 
@@ -280,7 +280,7 @@ export default function Comunidad() {
                       hover:bg-gray-50 transition-colors
                       ${i < resultados.length - 1 ? "border-b border-gray-50" : ""}`}
                   >
-                    <div className="w-10 h-10 rounded-full bg-oferta-50 border border-oferta-100
+                    <div className="w-10 h-10 rounded-full bg-naranja-50 border border-naranja-100
                       flex items-center justify-center text-xs font-semibold text-marino-500 shrink-0">
                       {u.indicativo.slice(0, 2).toUpperCase()}
                     </div>
@@ -326,7 +326,7 @@ export default function Comunidad() {
                   onChange={(e) => setForm({ ...form, frecuencia: e.target.value })}
                   placeholder="ej: 144.300 MHz"
                   className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm
-                    focus:outline-none focus:ring-2 focus:ring-oferta-500"
+                    focus:outline-none focus:ring-2 focus:ring-naranja-500"
                 />
               </div>
               <div>
@@ -337,7 +337,7 @@ export default function Comunidad() {
                   value={form.modo}
                   onChange={(e) => setForm({ ...form, modo: e.target.value })}
                   className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm
-                    focus:outline-none focus:ring-2 focus:ring-oferta-500 bg-white"
+                    focus:outline-none focus:ring-2 focus:ring-naranja-500 bg-white"
                 >
                   <option>SSB</option>
                   <option>FM</option>
@@ -355,7 +355,7 @@ export default function Comunidad() {
                   value={minutos}
                   onChange={(e) => setMinutos(Number(e.target.value))}
                   className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm
-                    focus:outline-none focus:ring-2 focus:ring-oferta-500 bg-white"
+                    focus:outline-none focus:ring-2 focus:ring-naranja-500 bg-white"
                 >
                   <option value={30}>30 minutos</option>
                   <option value={120}>2 horas</option>
@@ -378,7 +378,7 @@ export default function Comunidad() {
                 placeholder="ej: Activación SOTA desde EA1, buscando contactos HF..."
                 rows={3}
                 className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm
-                  focus:outline-none focus:ring-2 focus:ring-oferta-500 resize-none"
+                  focus:outline-none focus:ring-2 focus:ring-naranja-500 resize-none"
               />
               <p className="text-xs text-gray-300 text-right mt-1">
                 {120 - form.mensaje.length} caracteres restantes
@@ -400,7 +400,7 @@ export default function Comunidad() {
               <button
                 onClick={handlePublicar}
                 disabled={publicando}
-                className="flex-1 py-2 rounded-xl bg-oferta-500 hover:bg-oferta-600 text-white
+                className="flex-1 py-2 rounded-xl bg-naranja-500 hover:bg-naranja-600 text-white
                   text-sm font-medium transition-colors disabled:opacity-50"
               >
                 {publicando ? "Publicando..." : "Publicar"}
@@ -425,7 +425,7 @@ function TarjetaLlamada({ llamada, esMia, tiempoRestante, tiempoDesde, onBorrar,
               {llamada.usuario?.indicativo || llamada.usuario?.nombre}
             </span>
             {esMia && (
-              <span className="text-xs font-medium bg-oferta-500 text-white
+              <span className="text-xs font-medium bg-naranja-500 text-white
                 px-2 py-0.5 rounded-full">
                 Tu llamada
               </span>
@@ -436,7 +436,7 @@ function TarjetaLlamada({ llamada, esMia, tiempoRestante, tiempoDesde, onBorrar,
             {llamada.usuario?.localizacion ? ` · ${llamada.usuario.localizacion}` : ""}
           </p>
         </div>
-        <span className="text-xl font-medium text-oferta-500">{llamada.frecuencia}</span>
+        <span className="text-xl font-medium text-naranja-500">{llamada.frecuencia}</span>
       </div>
 
       <div className="flex gap-2 flex-wrap mt-3">
@@ -471,8 +471,8 @@ function TarjetaLlamada({ llamada, esMia, tiempoRestante, tiempoDesde, onBorrar,
         ) : (
           <button
             onClick={() => window.open(`https://www.qrz.com/db/${llamada.usuario?.indicativo}`, "_blank")}
-            className="text-xs font-medium bg-oferta-50 text-oferta-600 border border-oferta-100
-      px-3 py-1.5 rounded-xl hover:bg-oferta-100 transition-colors"
+            className="text-xs font-medium bg-naranja-50 text-naranja-600 border border-naranja-100
+      px-3 py-1.5 rounded-xl hover:bg-naranja-100 transition-colors"
           >
             Ver en QRZ
           </button>

@@ -83,7 +83,7 @@ export default function AnuncioCard({ anuncio, imagenes, onDelete, usuario, onFa
 
         {/* titulo, se se hace click va al detalle del anuncio */}
         <h3
-          className="font-semibold text-gray-800 truncate cursor-pointer hover:text-oferta-600 transition-colors"
+          className="font-semibold text-gray-800 truncate cursor-pointer hover:text-naranja-600 transition-colors"
           onClick={() => navigate(`/anuncio/${anuncio.id}`)}
         >
           {anuncio.nombre}
@@ -99,7 +99,7 @@ export default function AnuncioCard({ anuncio, imagenes, onDelete, usuario, onFa
             className="flex items-center gap-1.5 mt-1 cursor-pointer group"
             onClick={(e) => { e.stopPropagation(); navigate(`/usuario/${anuncio.usuario.id}`); }}
           >
-            <p className="text-xs text-gray-400 group-hover:text-oferta-600 transition-colors">
+            <p className="text-xs text-gray-400 group-hover:text-naranja-600 transition-colors">
               {anuncio.usuario.nombre}
             </p>
           </div>
@@ -107,7 +107,7 @@ export default function AnuncioCard({ anuncio, imagenes, onDelete, usuario, onFa
 
         {/* estado a la izquierda y fecha a la derecha */}
         <div className="flex items-center justify-between mt-2">
-          <span className="text-xs bg-oferta-50 text-oferta-600 font-medium px-2 py-0.5 rounded-full">
+          <span className="text-xs bg-naranja-50 text-naranja-600 font-medium px-2 py-0.5 rounded-full">
             {etiquetaEstado(anuncio.estado)}
           </span>
           <span className="text-xs text-gray-400">{anuncio.fechaPublicacion}</span>
@@ -115,7 +115,7 @@ export default function AnuncioCard({ anuncio, imagenes, onDelete, usuario, onFa
 
         {/* precio con dos decimales y favorito */}
         <div className="flex items-center justify-between mt-3">
-          <p className="text-xl font-bold text-oferta-600">
+          <p className="text-xl font-bold text-naranja-600">
             {moneda === "EUR"
               ? `${convertir(anuncio.precio)} €`
               : `${MONEDAS.find(m => m.codigo === moneda)?.simbolo}${cargando ? "..." : convertir(anuncio.precio)}`

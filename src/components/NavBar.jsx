@@ -30,13 +30,13 @@ export default function NavBar() {
     // pestaña activa en escritorio
     const activa = (ruta) =>
         location.pathname === ruta
-            ? "bg-oferta-500 text-white text-sm font-medium px-4 py-2 rounded-t-lg"
-            : "text-gray-500 hover:text-oferta-600 text-sm font-medium px-4 py-2 rounded-t-lg transition-colors";
+            ? "bg-naranja-500 text-white text-sm font-medium px-4 py-2 rounded-t-lg"
+            : "text-gray-500 hover:text-naranja-600 text-sm font-medium px-4 py-2 rounded-t-lg transition-colors";
 
     // enlace activo en el panel móvil
     const activaMovil = (ruta) =>
         location.pathname === ruta
-            ? "block w-full text-left px-4 py-3 text-sm font-medium text-oferta-600 bg-oferta-50 border-l-4 border-oferta-500"
+            ? "block w-full text-left px-4 py-3 text-sm font-medium text-naranja-600 bg-naranja-50 border-l-4 border-naranja-500"
             : "block w-full text-left px-4 py-3 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors";
 
     const enlaces = [
@@ -110,7 +110,7 @@ export default function NavBar() {
                             <div className="relative menu-usuario">
                                 <button
                                     onClick={() => setMenuAbierto(prev => !prev)}
-                                    className="w-9 h-9 rounded-full overflow-hidden border-2 border-oferta-500 hover:border-oferta-600 transition-colors"
+                                    className="w-9 h-9 rounded-full overflow-hidden border-2 border-naranja-500 hover:border-naranja-600 transition-colors"
                                 >
                                     <img src="https://www.gravatar.com/avatar/?d=mp" alt="avatar"
                                         className="w-full h-full object-cover rounded-full" />
@@ -127,7 +127,7 @@ export default function NavBar() {
                                                 onClick={() => { setMenuAbierto(false); navigate("/perfil"); }}
                                                 className="w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-2"
                                             >
-                                                <User className="w-4 h-4 text-oferta-500" />Mi perfil
+                                                <User className="w-4 h-4 text-naranja-500" />Mi perfil
                                             </button>
                                         )}
                                         {usuario.rol !== "ROLE_ADMIN" && (
@@ -135,7 +135,7 @@ export default function NavBar() {
                                                 onClick={() => { setMenuAbierto(false); navigate("/mis-anuncios"); }}
                                                 className="w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-2"
                                             >
-                                                <Tag className="w-4 h-4 text-oferta-500" />Mis anuncios
+                                                <Tag className="w-4 h-4 text-naranja-500" />Mis anuncios
                                             </button>
                                         )}
                                         {usuario.rol !== "ROLE_ADMIN" && (
@@ -158,11 +158,11 @@ export default function NavBar() {
                         ) : (
                             <div className="flex gap-2">
                                 <button onClick={() => navigate("/registro")}
-                                    className="border border-oferta-500 text-oferta-500 hover:bg-oferta-50 font-semibold px-4 py-2 rounded-xl text-sm transition-colors whitespace-nowrap">
+                                    className="border border-naranja-500 text-naranja-500 hover:bg-naranja-50 font-semibold px-4 py-2 rounded-xl text-sm transition-colors whitespace-nowrap">
                                     Registrarse
                                 </button>
                                 <button onClick={() => navigate("/login")}
-                                    className="bg-oferta-500 hover:bg-oferta-600 text-white font-semibold px-4 py-2 rounded-xl text-sm transition-colors whitespace-nowrap">
+                                    className="bg-naranja-500 hover:bg-naranja-600 text-white font-semibold px-4 py-2 rounded-xl text-sm transition-colors whitespace-nowrap">
                                     Iniciar sesión
                                 </button>
                             </div>
@@ -233,7 +233,7 @@ export default function NavBar() {
                         {usuario ? (
                             <div className="px-4 py-2 space-y-1">
                                 <div className="flex items-center gap-3 py-2">
-                                    <div className="w-9 h-9 rounded-full overflow-hidden border-2 border-oferta-500 shrink-0">
+                                    <div className="w-9 h-9 rounded-full overflow-hidden border-2 border-naranja-500 shrink-0">
                                         <img src="https://www.gravatar.com/avatar/?d=mp" alt="avatar"
                                             className="w-full h-full object-cover rounded-full" />
                                     </div>
@@ -248,13 +248,13 @@ export default function NavBar() {
                                         onClick={() => { setMenuAbierto(false); navigate("/perfil"); }}
                                         className="w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-2"
                                     >
-                                        <User className="w-4 h-4 text-oferta-500" />Mi perfil
+                                        <User className="w-4 h-4 text-naranja-500" />Mi perfil
                                     </button>
                                 )}
                                 {usuario.rol !== "ROLE_ADMIN" && (
                                     <button onClick={() => navigate("/mis-anuncios")}
                                         className="w-full text-left px-3 py-2.5 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-colors flex items-center gap-2">
-                                        <Tag className="w-4 h-4 text-oferta-500" />Mis anuncios
+                                        <Tag className="w-4 h-4 text-naranja-500" />Mis anuncios
                                     </button>
                                 )}
                                 {usuario.rol !== "ROLE_ADMIN" && (
@@ -271,11 +271,11 @@ export default function NavBar() {
                         ) : (
                             <div className="px-4 py-3 flex flex-col gap-2">
                                 <button onClick={() => navigate("/registro")}
-                                    className="w-full border border-oferta-500 text-oferta-500 hover:bg-oferta-50 font-semibold px-4 py-2.5 rounded-xl text-sm transition-colors">
+                                    className="w-full border border-naranja-500 text-naranja-500 hover:bg-naranja-50 font-semibold px-4 py-2.5 rounded-xl text-sm transition-colors">
                                     Registrarse
                                 </button>
                                 <button onClick={() => navigate("/login")}
-                                    className="w-full bg-oferta-500 hover:bg-oferta-600 text-white font-semibold px-4 py-2.5 rounded-xl text-sm transition-colors">
+                                    className="w-full bg-naranja-500 hover:bg-naranja-600 text-white font-semibold px-4 py-2.5 rounded-xl text-sm transition-colors">
                                     Iniciar sesión
                                 </button>
                             </div>

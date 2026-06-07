@@ -154,7 +154,7 @@ export default function ListaAnuncios() {
 
           {/* moneda y publicar */}
           <div className="flex items-center justify-between gap-3">
-            <h1 className="text-xl font-bold text-oferta-600 whitespace-nowrap">
+            <h1 className="text-xl font-bold text-naranja-600 whitespace-nowrap">
               Anuncios
             </h1>
 
@@ -165,7 +165,7 @@ export default function ListaAnuncios() {
                   <select
                     value={moneda}
                     onChange={(e) => cambiarMoneda(e.target.value)}
-                    className="appearance-none border border-gray-200 rounded-xl pl-3 pr-8 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-oferta-500 text-gray-600 bg-white cursor-pointer"
+                    className="appearance-none border border-gray-200 rounded-xl pl-3 pr-8 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-naranja-500 text-gray-600 bg-white cursor-pointer"
                   >
                     {MONEDAS.map(m => (
                       <option key={m.codigo} value={m.codigo}>
@@ -183,7 +183,7 @@ export default function ListaAnuncios() {
               {usuario && usuario.rol !== "ROLE_ADMIN" && (
                 <button
                   onClick={() => navigate("/anuncio/nuevo")}
-                  className="bg-oferta-500 hover:bg-oferta-600 text-white font-semibold px-4 py-2 rounded-xl text-sm transition-colors whitespace-nowrap"
+                  className="bg-naranja-500 hover:bg-naranja-600 text-white font-semibold px-4 py-2 rounded-xl text-sm transition-colors whitespace-nowrap"
                 >
                   + Publicar
                 </button>
@@ -199,7 +199,7 @@ export default function ListaAnuncios() {
               placeholder="Buscar anuncios..."
               value={filtros.nombre}
               onChange={(e) => cambiarFiltro("nombre", e.target.value)}
-              className="flex-1 border border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-oferta-500"
+              className="flex-1 border border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-naranja-500"
             />
 
             {/* buscador usuarios */}
@@ -212,7 +212,7 @@ export default function ListaAnuncios() {
                   setBusquedaUsuario(e.target.value);
                   buscarUsuarios(e.target.value);
                 }}
-                className="w-full border border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-oferta-500"
+                className="w-full border border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-naranja-500"
               />
               {/* resultados desplegables */}
               {busquedaUsuario.trim() && (
@@ -233,8 +233,8 @@ export default function ListaAnuncios() {
                       }}
                       className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors border-b border-gray-50 last:border-0"
                     >
-                      <div className="w-8 h-8 rounded-full bg-oferta-100 flex items-center justify-center shrink-0">
-                        <span className="text-sm font-bold text-oferta-600">
+                      <div className="w-8 h-8 rounded-full bg-naranja-100 flex items-center justify-center shrink-0">
+                        <span className="text-sm font-bold text-naranja-600">
                           {u.nombre.charAt(0).toUpperCase()}
                         </span>
                       </div>
@@ -261,10 +261,10 @@ export default function ListaAnuncios() {
               value={filtros.categoria}
               onChange={(e) => cambiarFiltro("categoria", e.target.value)}
               className={`shrink-0 rounded-full px-3 py-1.5 text-sm border cursor-pointer
-    focus:outline-none focus:ring-2 focus:ring-oferta-500 transition-colors
+    focus:outline-none focus:ring-2 focus:ring-naranja-500 transition-colors
     ${filtros.categoria
-                  ? "bg-oferta-500 text-white border-oferta-500"
-                  : "bg-white text-gray-600 border-gray-200 hover:border-oferta-500"}`}
+                  ? "bg-naranja-500 text-white border-naranja-500"
+                  : "bg-white text-gray-600 border-gray-200 hover:border-naranja-500"}`}
             >
               <option value="">Todas las categorías</option>
               {categorias.map(cat => (
@@ -277,10 +277,10 @@ export default function ListaAnuncios() {
               value={filtros.estado}
               onChange={e => cambiarFiltro("estado", e.target.value)}
               className={`shrink-0 rounded-full px-3 py-1.5 text-sm border cursor-pointer
-    focus:outline-none focus:ring-2 focus:ring-oferta-500 transition-colors
+    focus:outline-none focus:ring-2 focus:ring-naranja-500 transition-colors
     ${filtros.estado
-                  ? "bg-oferta-500 text-white border-oferta-500"
-                  : "bg-white text-gray-600 border-gray-200 hover:border-oferta-500"}`}
+                  ? "bg-naranja-500 text-white border-naranja-500"
+                  : "bg-white text-gray-600 border-gray-200 hover:border-naranja-500"}`}
             >
               <option value="">Cualquier estado</option>
               <option value="Perfecto">Perfecto</option>
@@ -296,10 +296,10 @@ export default function ListaAnuncios() {
               value={filtros.precioMin}
               onChange={e => cambiarFiltro("precioMin", e.target.value)}
               className={`shrink-0 w-28 rounded-full px-3 py-1.5 text-sm border
-    focus:outline-none focus:ring-2 focus:ring-oferta-500 transition-colors
+    focus:outline-none focus:ring-2 focus:ring-naranja-500 transition-colors
     ${filtros.precioMin
-                  ? "bg-oferta-500 text-white border-oferta-500 placeholder:text-white"
-                  : "bg-white text-gray-600 border-gray-200 hover:border-oferta-500"}`}
+                  ? "bg-naranja-500 text-white border-naranja-500 placeholder:text-white"
+                  : "bg-white text-gray-600 border-gray-200 hover:border-naranja-500"}`}
             />
 
             {/* precio máx */}
@@ -308,10 +308,10 @@ export default function ListaAnuncios() {
               value={filtros.precioMax}
               onChange={e => cambiarFiltro("precioMax", e.target.value)}
               className={`shrink-0 w-28 rounded-full px-3 py-1.5 text-sm border
-    focus:outline-none focus:ring-2 focus:ring-oferta-500 transition-colors
+    focus:outline-none focus:ring-2 focus:ring-naranja-500 transition-colors
     ${filtros.precioMax
-                  ? "bg-oferta-500 text-white border-oferta-500 placeholder:text-white"
-                  : "bg-white text-gray-600 border-gray-200 hover:border-oferta-500"}`}
+                  ? "bg-naranja-500 text-white border-naranja-500 placeholder:text-white"
+                  : "bg-white text-gray-600 border-gray-200 hover:border-naranja-500"}`}
             />
 
             {/* ordenar */}
@@ -319,10 +319,10 @@ export default function ListaAnuncios() {
               value={filtros.orden}
               onChange={e => cambiarFiltro("orden", e.target.value)}
               className={`shrink-0 rounded-full px-3 py-1.5 text-sm border cursor-pointer
-    focus:outline-none focus:ring-2 focus:ring-oferta-500 transition-colors
+    focus:outline-none focus:ring-2 focus:ring-naranja-500 transition-colors
     ${filtros.orden
-                  ? "bg-oferta-500 text-white border-oferta-500"
-                  : "bg-white text-gray-600 border-gray-200 hover:border-oferta-500"}`}
+                  ? "bg-naranja-500 text-white border-naranja-500"
+                  : "bg-white text-gray-600 border-gray-200 hover:border-naranja-500"}`}
             >
               <option value="">Ordenar por...</option>
               <option value="fecha_reciente">Más recientes</option>
@@ -346,12 +346,12 @@ export default function ListaAnuncios() {
           <div className="lg:hidden">
             <button
               onClick={() => setFiltrosAbiertos(prev => !prev)}
-              className="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-oferta-500 transition-colors"
+              className="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-naranja-500 transition-colors"
             >
               <SlidersHorizontal className="w-4 h-4" />
               Filtros
               {hayFiltrosActivos && (
-                <span className="w-2 h-2 rounded-full bg-oferta-500" />
+                <span className="w-2 h-2 rounded-full bg-naranja-500" />
               )}
             </button>
 
@@ -362,10 +362,10 @@ export default function ListaAnuncios() {
                   value={filtros.categoria}
                   onChange={(e) => cambiarFiltro("categoria", e.target.value)}
                   className={`w-full rounded-full px-3 py-1.5 text-sm border cursor-pointer
-    focus:outline-none focus:ring-2 focus:ring-oferta-500 transition-colors
+    focus:outline-none focus:ring-2 focus:ring-naranja-500 transition-colors
     ${filtros.categoria
-                      ? "bg-oferta-500 text-white border-oferta-500"
-                      : "bg-white text-gray-600 border-gray-200 hover:border-oferta-500"}`}
+                      ? "bg-naranja-500 text-white border-naranja-500"
+                      : "bg-white text-gray-600 border-gray-200 hover:border-naranja-500"}`}
                 >
                   <option value="">Todas las categorías</option>
                   {categorias.map(cat => (
@@ -378,10 +378,10 @@ export default function ListaAnuncios() {
                   value={filtros.estado}
                   onChange={e => cambiarFiltro("estado", e.target.value)}
                   className={`w-full rounded-full px-3 py-1.5 text-sm border cursor-pointer
-    focus:outline-none focus:ring-2 focus:ring-oferta-500 transition-colors
+    focus:outline-none focus:ring-2 focus:ring-naranja-500 transition-colors
     ${filtros.estado
-                      ? "bg-oferta-500 text-white border-oferta-500"
-                      : "bg-white text-gray-600 border-gray-200 hover:border-oferta-500"}`}
+                      ? "bg-naranja-500 text-white border-naranja-500"
+                      : "bg-white text-gray-600 border-gray-200 hover:border-naranja-500"}`}
                 >
                   <option value="">Cualquier estado</option>
                   <option value="Perfecto">Perfecto</option>
@@ -397,10 +397,10 @@ export default function ListaAnuncios() {
                   value={filtros.precioMin}
                   onChange={e => cambiarFiltro("precioMin", e.target.value)}
                   className={`w-full rounded-full px-3 py-1.5 text-sm border
-    focus:outline-none focus:ring-2 focus:ring-oferta-500 transition-colors
+    focus:outline-none focus:ring-2 focus:ring-naranja-500 transition-colors
     ${filtros.precioMin
-                      ? "bg-oferta-500 text-white border-oferta-500 placeholder:text-white"
-                      : "bg-white text-gray-600 border-gray-200 hover:border-oferta-500"}`}
+                      ? "bg-naranja-500 text-white border-naranja-500 placeholder:text-white"
+                      : "bg-white text-gray-600 border-gray-200 hover:border-naranja-500"}`}
                 />
 
                 {/* precio máx */}
@@ -409,10 +409,10 @@ export default function ListaAnuncios() {
                   value={filtros.precioMax}
                   onChange={e => cambiarFiltro("precioMax", e.target.value)}
                   className={`w-full rounded-full px-3 py-1.5 text-sm border
-    focus:outline-none focus:ring-2 focus:ring-oferta-500 transition-colors
+    focus:outline-none focus:ring-2 focus:ring-naranja-500 transition-colors
     ${filtros.precioMax
-                      ? "bg-oferta-500 text-white border-oferta-500 placeholder:text-white"
-                      : "bg-white text-gray-600 border-gray-200 hover:border-oferta-500"}`}
+                      ? "bg-naranja-500 text-white border-naranja-500 placeholder:text-white"
+                      : "bg-white text-gray-600 border-gray-200 hover:border-naranja-500"}`}
                 />
 
                 {/* ordenar */}
@@ -420,10 +420,10 @@ export default function ListaAnuncios() {
                   value={filtros.orden}
                   onChange={e => cambiarFiltro("orden", e.target.value)}
                   className={`w-full rounded-full px-3 py-1.5 text-sm border cursor-pointer
-    focus:outline-none focus:ring-2 focus:ring-oferta-500 transition-colors
+    focus:outline-none focus:ring-2 focus:ring-naranja-500 transition-colors
     ${filtros.orden
-                      ? "bg-oferta-500 text-white border-oferta-500"
-                      : "bg-white text-gray-600 border-gray-200 hover:border-oferta-500"}`}
+                      ? "bg-naranja-500 text-white border-naranja-500"
+                      : "bg-white text-gray-600 border-gray-200 hover:border-naranja-500"}`}
                 >
                   <option value="">Ordenar por...</option>
                   <option value="fecha_reciente">Más recientes</option>
@@ -515,7 +515,7 @@ export default function ListaAnuncios() {
                     onClick={() => irAPagina(item)}
                     className={`w-9 h-9 rounded-lg text-sm font-medium transition-colors
               ${item === paginaActual
-                        ? "bg-oferta-500 text-white"
+                        ? "bg-naranja-500 text-white"
                         : "border border-gray-200 text-gray-600 hover:bg-gray-50"}`}
                   >
                     {item + 1}

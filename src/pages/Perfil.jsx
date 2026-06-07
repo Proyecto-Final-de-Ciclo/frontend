@@ -106,7 +106,7 @@ export default function Perfil() {
       <header className="bg-white border-b border-gray-100 sticky top-0 z-10 shadow-sm">
         <NavBar />
         <div className="max-w-3xl mx-auto px-4 py-4">
-          <h1 className="text-xl font-bold text-oferta-600">Mi perfil</h1>
+          <h1 className="text-xl font-bold text-naranja-600">Mi perfil</h1>
           <p className="text-xs text-gray-400 mt-0.5">
             Gestiona tus datos y decide qué ven los demás
           </p>
@@ -126,8 +126,8 @@ export default function Perfil() {
               onClick={() => setPestanaActiva(p.id)}
               className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-colors
                 ${pestanaActiva === p.id
-                  ? "bg-oferta-500 text-white border-oferta-500"
-                  : "bg-white text-gray-500 border-gray-200 hover:border-oferta-200"
+                  ? "bg-naranja-500 text-white border-naranja-500"
+                  : "bg-white text-gray-500 border-gray-200 hover:border-naranja-200"
                 }`}
             >
               {p.label}
@@ -139,7 +139,7 @@ export default function Perfil() {
       <main className="max-w-3xl mx-auto px-4 py-6 flex-1 w-full">
 
         {exito && (
-          <div className="bg-oferta-50 border border-oferta-200 rounded-xl px-4 py-3
+          <div className="bg-naranja-50 border border-naranja-200 rounded-xl px-4 py-3
             text-sm text-marino-500 mb-4">
             Cambios guardados correctamente.
           </div>
@@ -282,7 +282,7 @@ export default function Perfil() {
                   <button
                     onClick={handleCambiarPassword}
                     disabled={guardandoPassword}
-                    className="bg-oferta-500 hover:bg-oferta-600 text-white text-sm font-medium
+                    className="bg-naranja-500 hover:bg-naranja-600 text-white text-sm font-medium
                       px-5 py-2 rounded-xl transition-colors disabled:opacity-50"
                   >
                     {guardandoPassword ? "Guardando..." : "Cambiar contraseña"}
@@ -437,7 +437,7 @@ export default function Perfil() {
                     onClick={() => set("qslBuro", !form.qslBuro)}
                     className={`text-xs font-medium px-4 py-1.5 rounded-full border transition-colors
                       ${form.qslBuro
-                        ? "bg-oferta-50 text-marino-500 border-oferta-200"
+                        ? "bg-naranja-50 text-marino-500 border-naranja-200"
                         : "bg-gray-50 text-gray-400 border-gray-200"
                       }`}
                   >
@@ -481,7 +481,7 @@ export default function Perfil() {
 
 // estilos
 const estiloInput = `w-full border border-gray-200 rounded-xl px-3 py-2 text-sm
-  focus:outline-none focus:ring-2 focus:ring-oferta-500 bg-white`;
+  focus:outline-none focus:ring-2 focus:ring-naranja-500 bg-white`;
 
 const estiloInputDeshabilitado = `w-full border border-gray-100 rounded-xl px-3 py-2
   text-sm bg-gray-50 text-gray-400`;
@@ -505,7 +505,7 @@ function Campo({ label, children, siemprePublico, publico, onToggle }) {
             onClick={onToggle}
             className={`text-xs font-medium px-3 py-0.5 rounded-full border transition-colors
               ${publico
-                ? "bg-oferta-50 text-marino-500 border-oferta-200"
+                ? "bg-naranja-50 text-marino-500 border-naranja-200"
                 : "bg-gray-50 text-gray-400 border-gray-200"
               }`}
           >
@@ -534,7 +534,7 @@ function BotonesGuardar({ guardando, error, onGuardar, onCancelar }) {
         <button
           onClick={onGuardar}
           disabled={guardando}
-          className="px-5 py-2 rounded-xl bg-oferta-500 hover:bg-oferta-600 text-white
+          className="px-5 py-2 rounded-xl bg-naranja-500 hover:bg-naranja-600 text-white
             text-sm font-medium transition-colors disabled:opacity-50"
         >
           {guardando ? "Guardando..." : "Guardar cambios"}

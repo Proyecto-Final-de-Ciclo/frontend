@@ -26,7 +26,7 @@ export default function Sobre() {
 
                 {/* qué es */}
                 <section id="que-es">
-                    <h1 className="text-2xl font-bold text-oferta-600 mb-4">Qué es RadiOferta</h1>
+                    <h1 className="text-2xl font-bold text-naranja-600 mb-4">Qué es RadiOferta</h1>
                     <p className="text-gray-600 text-sm leading-relaxed">
                         RadiOferta es una plataforma pensada para que la comunidad de radioaficionados y
                         radioaficionadas pueda contar con las herramientas más útiles en un único sitio.
@@ -39,7 +39,7 @@ export default function Sobre() {
 
                 {/* proyecto */}
                 <section id="proyecto">
-                    <h2 className="text-xl font-bold text-oferta-600 mb-4">El proyecto</h2>
+                    <h2 className="text-xl font-bold text-naranja-600 mb-4">El proyecto</h2>
                     <p className="text-gray-600 text-sm leading-relaxed">
                         Proyecto de Fin de Ciclo del Ciclo Dual de Desarrollo de Aplicaciones Web,
                         curso 2025–2026, en el{" "}
@@ -47,7 +47,7 @@ export default function Sobre() {
                             href="https://www.fernandowirtz.com/"
                             target="_blank"
                             rel="noreferrer"
-                            className="text-oferta-500 underline underline-offset-2 hover:text-oferta-600 transition-colors"
+                            className="text-naranja-500 underline underline-offset-2 hover:text-naranja-600 transition-colors"
                             IES Fernando Wirtz >
                         </a>.
                     </p>
@@ -55,7 +55,7 @@ export default function Sobre() {
 
                 {/* agradecimientos */}
                 <section id="agradecimientos">
-                    <h2 className="text-xl font-bold text-oferta-600 mb-4">Agradecimientos</h2>
+                    <h2 className="text-xl font-bold text-naranja-600 mb-4">Agradecimientos</h2>
                     <p className="text-gray-600 text-sm leading-relaxed">
                         Este proyecto no existiría sin{" "}
                         <span className="font-medium text-gray-800">EA1IWS</span> (Fran) y{" "}

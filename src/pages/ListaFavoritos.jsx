@@ -55,7 +55,7 @@ export default function ListaFavoritos() {
       <header className="bg-white border-b border-gray-100 sticky top-0 z-10 shadow-sm">
         <div className="max-w-5xl mx-auto px-4 py-4 flex items-center gap-4">
           <BotonVolver to="/" />
-          <h1 className="text-xl font-bold text-oferta-600">
+          <h1 className="text-xl font-bold text-naranja-600">
             Mis favoritos
           </h1>
         </div>
@@ -82,12 +82,6 @@ export default function ListaFavoritos() {
         {!cargando && !error && favoritos.length === 0 && (
           <div className="flex-1 flex items-center justify-center text-red-400">
             <p>Todavía no tienes anuncios guardados.</p>
-            <button
-              onClick={() => navigate("/")}
-              className="mt-4 text-oferta-600 underline text-sm"
-            >
-              Explorar anuncios
-            </button>
           </div>
         )}
 
