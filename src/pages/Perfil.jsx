@@ -13,7 +13,7 @@ export default function Perfil() {
     if (!usuario) navigate("/login");
     if (usuario?.rol === "ROLE_ADMIN") navigate("/");
   }, [usuario]);
-  
+
   const [pestanaActiva, setPestanaActiva] = useState("datos");
 
   const [form, setForm] = useState({
@@ -139,8 +139,8 @@ export default function Perfil() {
       <main className="max-w-3xl mx-auto px-4 py-6 flex-1 w-full">
 
         {exito && (
-          <div className="bg-naranja-50 border border-naranja-200 rounded-xl px-4 py-3
-            text-sm text-marino-500 mb-4">
+          <div className="bg-green-100 border border-green-300 rounded-xl px-4 py-3
+  text-sm font-medium text-green-800 mb-4">
             Cambios guardados correctamente.
           </div>
         )}

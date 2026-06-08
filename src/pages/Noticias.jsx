@@ -105,7 +105,7 @@ export default function Noticias() {
                         )}
 
                         {/* separador */}
-                        <div className="flex items-center gap-3 px-5 py-2 bg-gray-50 sticky top-0 z-10">
+                        <div className="flex items-center gap-3 px-5 py-2 bg-gray-50 sticky top-0 z-0">
                             <div className="flex-1 h-px bg-gray-200"></div>
                             <span className="text-xs text-gray-400 uppercase tracking-widest">Más noticias</span>
                             <div className="flex-1 h-px bg-gray-200"></div>

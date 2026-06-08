@@ -372,7 +372,7 @@ export default function FormularioAnuncio() {
               >
                 <option value="" disabled hidden>Selecciona un estado...</option>
                 {ESTADOS.map((e) => (
-                  <option key={e.valor} value={e.valor} style={{ color: "black" }}>{e.etiqueta}</option>
+                  <option key={e.valor} value={e.valor}>{e.etiqueta}</option>
                 ))}
               </select>
             </div>
