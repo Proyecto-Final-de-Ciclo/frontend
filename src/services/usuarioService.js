@@ -17,7 +17,9 @@ export const login = async (nombre, password) => {
   localStorage.setItem("token", datos.accessToken);
 
   // carga el perfil completo del usuario
-  const perfil = await fetch(`${BASE}/usuario/${datos.id}`).then(r => r.json());
+  const perfil = await fetch(`${BASE}/usuario/${datos.id}`, {
+    headers: { "Authorization": `Bearer ${datos.accessToken}` },
+  }).then(r => r.json());
 
   // combina los datos del login con el perfil completo
   const usuarioCompleto = { ...datos, ...perfil, rol: datos.rol };
@@ -59,18 +61,18 @@ export const register = async (nombre, email, password) => {
 const authHeader = () => ({ "Authorization": `Bearer ${getToken()}` });
 
 export const getUsuarios = async (busqueda = "") => {
-    const params = busqueda ? `?busqueda=${busqueda}` : "";
-    const token = getToken();
-    const headers = { "Content-Type": "application/json" };
-    if (token) headers["Authorization"] = `Bearer ${token}`;
+  const params = busqueda ? `?busqueda=${busqueda}` : "";
+  const token = getToken();
+  const headers = { "Content-Type": "application/json" };
+  if (token) headers["Authorization"] = `Bearer ${token}`;
 
-    const response = await fetch(`${BASE}/usuarios${params}`, {
-        method: "GET",
-        headers,
-    });
-    if (response.status === 404) return [];
-    if (!response.ok) throw new Error("Error al obtener los usuarios");
-    return await response.json();
+  const response = await fetch(`${BASE}/usuarios${params}`, {
+    method: "GET",
+    headers,
+  });
+  if (response.status === 404) return [];
+  if (!response.ok) throw new Error("Error al obtener los usuarios");
+  return await response.json();
 };
 
 export const updateUsuario = async (id, usuario) => {
@@ -93,23 +95,26 @@ export const deleteUsuario = async (id) => {
 };
 
 export const getUsuarioPublico = async (id) => {
-    const response = await fetch(`${BASE}/usuario/${id}`);
+    const token = getToken();
+    const headers = {};
+    if (token) headers["Authorization"] = `Bearer ${token}`;
+    const response = await fetch(`${BASE}/usuario/${id}`, { headers });
     if (!response.ok) throw new Error("Usuario no encontrado");
     return await response.json();
 };
 
 export const getAnunciosUsuario = async (id) => {
-    const response = await fetch(`${BASE}/usuario/${id}/anuncios`);
-    if (!response.ok) throw new Error("Error al obtener los anuncios");
-    return await response.json();
+  const response = await fetch(`${BASE}/usuario/${id}/anuncios`);
+  if (!response.ok) throw new Error("Error al obtener los anuncios");
+  return await response.json();
 };
 
 export const editarPerfil = async (datos) => {
-    const response = await fetch(`${BASE}/usuario/perfil`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json", ...authHeader() },
-        body: JSON.stringify(datos),
-    });
-    if (!response.ok) throw new Error("Error al editar el perfil");
-    return await response.json();
+  const response = await fetch(`${BASE}/usuario/perfil`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json", ...authHeader() },
+    body: JSON.stringify(datos),
+  });
+  if (!response.ok) throw new Error("Error al editar el perfil");
+  return await response.json();
 };

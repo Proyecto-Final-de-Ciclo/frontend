@@ -437,7 +437,7 @@ export default function Perfil() {
                     onClick={() => set("qslBuro", !form.qslBuro)}
                     className={`text-xs font-medium px-4 py-1.5 rounded-full border transition-colors
                       ${form.qslBuro
-                        ? "bg-naranja-50 text-marino-500 border-naranja-200"
+                        ? "bg-naranja-50 text-naranja-600 border-naranja-200"
                         : "bg-gray-50 text-gray-400 border-gray-200"
                       }`}
                   >
@@ -505,7 +505,7 @@ function Campo({ label, children, siemprePublico, publico, onToggle }) {
             onClick={onToggle}
             className={`text-xs font-medium px-3 py-0.5 rounded-full border transition-colors
               ${publico
-                ? "bg-naranja-50 text-marino-500 border-naranja-200"
+                ? "bg-naranja-50 text-naranja-600 border-naranja-200"
                 : "bg-gray-50 text-gray-400 border-gray-200"
               }`}
           >

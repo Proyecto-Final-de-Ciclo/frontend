@@ -185,6 +185,11 @@ export default function PerfilUsuario() {
                             <User className="w-4 h-4 text-naranja-500" />
                             {perfil.nombre}
                         </h2>
+                        {(perfil.nombreReal || perfil.apellidos) && (
+                            <p className="text-sm text-gray-500">
+                                {[perfil.nombreReal, perfil.apellidos].filter(Boolean).join(" ")}
+                            </p>
+                        )}
                         {perfil.fechaRegistro && (
                             <p className="text-sm text-gray-400 flex items-center gap-2">
                                 <Calendar className="w-4 h-4" />
@@ -276,6 +281,36 @@ export default function PerfilUsuario() {
                         )}
                     </div>
                 </div>
+
+                {/* datos de radioaficionado (solo lo público) */}
+                {(perfil.modos || perfil.qslBuro || perfil.descripcionRadio ||
+                    (perfil.mostrarActivoDesde && perfil.activoDesde)) && (
+                        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6">
+                            <h3 className="text-lg font-semibold text-gray-700 mb-4">
+                                Datos de radioaficionado
+                            </h3>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                                {perfil.mostrarActivoDesde && perfil.activoDesde && (
+                                    <p className="text-gray-600">
+                                        <span className="font-medium text-gray-500">Activo desde:</span> {perfil.activoDesde}
+                                    </p>
+                                )}
+                                {perfil.modos && (
+                                    <p className="text-gray-600">
+                                        <span className="font-medium text-gray-500">Modos:</span> {perfil.modos}
+                                    </p>
+                                )}
+                                <p className="text-gray-600">
+                                    <span className="font-medium text-gray-500">QSL por buró:</span> {perfil.qslBuro ? "Sí" : "No"}
+                                </p>
+                                {perfil.descripcionRadio && (
+                                    <p className="text-gray-600 sm:col-span-2 italic">
+                                        {perfil.descripcionRadio}
+                                    </p>
+                                )}
+                            </div>
+                        </div>
+                    )}
 
                 {/* anuncios */}
                 <div>
