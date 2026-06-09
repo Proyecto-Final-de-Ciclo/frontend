@@ -331,7 +331,7 @@ export default function ListaAnuncios() {
             )}
           </div>
 
-          {/* móvil: botón + panel desplegable */}
+          {/* móvil */}
           <div className="lg:hidden">
             <button
               onClick={() => setFiltrosAbiertos(prev => !prev)}

@@ -169,10 +169,10 @@ export default function Comunidad() {
             )}
 
             {!errorLlamadas && llamadas.length === 0 && (
-  <p className="text-center text-gray-400 text-sm py-12">
-    No hay llamadas activas en este momento.
-  </p>
-)}
+              <p className="text-center text-gray-400 text-sm py-12">
+                No hay llamadas activas en este momento.
+              </p>
+            )}
 
             {/* llamada propia */}
             {miLlamada && (
@@ -415,7 +415,7 @@ export default function Comunidad() {
 }
 
 // componente para las tarjetas de llamada
-function TarjetaLlamada({ llamada, esMia, tiempoRestante, tiempoDesde, onBorrar, usuario  }) {
+function TarjetaLlamada({ llamada, esMia, tiempoRestante, tiempoDesde, onBorrar, usuario }) {
   return (
     <>
       <div className="flex justify-between items-start">

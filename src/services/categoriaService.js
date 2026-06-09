@@ -3,14 +3,12 @@ import { getToken } from "./usuarioService";
 
 const authHeader = () => ({ "Authorization": `Bearer ${getToken()}` });
 
-// público
 export const getCategorias = async () => {
     const response = await fetch(`${BASE}/categorias`);
     if (!response.ok) throw new Error("Error al obtener las categorías");
     return await response.json();
 };
 
-// solo ADMIN
 export const crearCategoria = async (nombre) => {
     const response = await fetch(`${BASE}/categoria`, {
         method: "POST",

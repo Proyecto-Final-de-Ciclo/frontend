@@ -78,12 +78,10 @@ export default function Noticias() {
             </header>
 
             {/* contenido principal con panel lateral */}
-            {/* CAMBIO 1: Se fuerza a que en pantallas grandes (lg) el main mida exactamente el alto de la pantalla menos la cabecera */}
             <main className={`max-w-5xl mx-auto px-4 py-6 flex-1 w-full ${noticiaActiva ? "min-h-0" : ""}`}>
                 <div className={`flex flex-col lg:flex-row gap-6 ${noticiaActiva ? "h-full" : ""}`}>
 
-                    {/* panel izquierdo (Lista de noticias) */}
-                    {/* CAMBIO 2: Añadida la clase lg:max-h-full para limitar el alto al contenedor padre cuando hay noticia activa */}
+                    {/* panel izquierdo */}
                     <div className={`flex flex-col bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden transition-all
                         ${noticiaActiva ? "hidden lg:flex lg:w-2/5 overflow-y-auto" : "w-full"}`}>
 

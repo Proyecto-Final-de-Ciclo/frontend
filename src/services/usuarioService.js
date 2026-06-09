@@ -1,6 +1,5 @@
 const BASE = import.meta.env.VITE_APP_BACKEND;
 
-// Hace login y guarda el token y los datos del usuario en localStorage
 export const login = async (nombre, password) => {
   const response = await fetch(`${BASE}/api/auth/signin`, {
     method: "POST",
@@ -16,30 +15,25 @@ export const login = async (nombre, password) => {
   const datos = await response.json();
   localStorage.setItem("token", datos.accessToken);
 
-  // carga el perfil completo del usuario
   const perfil = await fetch(`${BASE}/usuario/${datos.id}`, {
     headers: { "Authorization": `Bearer ${datos.accessToken}` },
   }).then(r => r.json());
 
-  // combina los datos del login con el perfil completo
   const usuarioCompleto = { ...datos, ...perfil, rol: datos.rol };
   localStorage.setItem("usuario", JSON.stringify(usuarioCompleto));
   return usuarioCompleto;
 };
 
-// Borra el token y los datos del usuario
 export const logout = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("usuario");
 };
 
-// Devuelve el usuario guardado, o null si no hay sesión
 export const getUsuario = () => {
   const usuario = localStorage.getItem("usuario");
   return usuario ? JSON.parse(usuario) : null;
 };
 
-// Devuelve el token para añadirlo en las peticiones protegidas
 export const getToken = () => localStorage.getItem("token");
 
 export const register = async (nombre, email, password) => {

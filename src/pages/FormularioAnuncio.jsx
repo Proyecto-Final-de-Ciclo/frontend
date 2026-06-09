@@ -72,9 +72,8 @@ export default function FormularioAnuncio() {
       }
     };
     cargarDatos();
-  }, [id, esEdicion]); // se reejecuta si cambia el id o el modo
+  }, [id, esEdicion]);
 
-  // e.target.name es el nombre del campo que cambió
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -372,7 +371,7 @@ export default function FormularioAnuncio() {
               >
                 <option value="" disabled hidden>Selecciona un estado...</option>
                 {ESTADOS.map((e) => (
-                  <option key={e.valor} value={e.valor}>{e.etiqueta}</option>
+                  <option key={e.valor} value={e.valor} style={{ color: "#000" }}>{e.etiqueta}</option>
                 ))}
               </select>
             </div>
@@ -391,7 +390,7 @@ export default function FormularioAnuncio() {
               >
                 <option value="">Selecciona una categoría</option>
                 {categorias.map(cat => (
-                  <option key={cat.id} value={cat.id}>{cat.nombre}</option>
+                  <option key={cat.id} value={cat.id} style={{ color: "#000" }}>{cat.nombre}</option>
                 ))}
               </select>
             </div>

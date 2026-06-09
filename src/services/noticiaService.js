@@ -1,16 +1,13 @@
-// Proxy CORS gratuito que convierte RSS a JSON
 const RSS2JSON = "https://api.rss2json.com/v1/api.json?rss_url=";
 
 const BASE = import.meta.env.VITE_APP_BACKEND;
 
-// Los mismos feeds y fuentes que tenías en el backend
 const FEEDS = [
   { url: "https://www.ure.es/feed", fuente: "URE" },
   { url: "https://ea1uro.com/radio/feed", fuente: "EA1URO" },
   { url: "https://selvamarnoticias.com/feed", fuente: "Selvamar Noticias" },
 ];
 
-// DESARROLLO: lee las noticias desde el backend (RomeTools)
 const getNoticiasBackend = async () => {
   const response = await fetch(`${BASE}/noticias`);
   if (response.status === 404) return [];
@@ -22,7 +19,6 @@ const getNoticiasFrontend = async () => {
   const haceUnMes = new Date();
   haceUnMes.setDate(haceUnMes.getDate() - 30);
 
-  // Lanzamos todas las peticiones en paralelo
   const resultados = await Promise.all(
     FEEDS.map(async ({ url, fuente }) => {
       try {
@@ -37,7 +33,7 @@ const getNoticiasFrontend = async () => {
             titulo: item.title,
             descripcion: limpiarHtml(item.description),
             enlace: item.link,
-            fecha: item.pubDate.split(" ")[0], // "2026-06-06"
+            fecha: item.pubDate.split(" ")[0],
             fuente,
           }));
       } catch (err) {
@@ -47,13 +43,11 @@ const getNoticiasFrontend = async () => {
     })
   );
 
-  // Aplanamos y ordenamos por fecha descendente
   return resultados
     .flat()
     .sort((a, b) => b.fecha.localeCompare(a.fecha));
 };
 
-// Misma limpieza HTML que tenías en el backend
 function limpiarHtml(html) {
   if (!html) return "";
   return html
@@ -69,7 +63,6 @@ function limpiarHtml(html) {
     .trim();
 }
 
-// En desarrollo usamos el backend (RomeTools); en producción, el frontend (rss2json)
 export const getNoticias = async () => {
   return import.meta.env.DEV ? getNoticiasBackend() : getNoticiasFrontend();
 };

@@ -1,12 +1,8 @@
-// Base URL del backend, definida en el archivo .env como VITE_APP_BACKEND
 const BASE = import.meta.env.VITE_APP_BACKEND;
 import { getToken } from "./usuarioService";
 
-// añade el token JWT a las peticiones protegidas
 const authHeader = () => ({ "Authorization": `Bearer ${getToken()}` });
 
-// ─── GET /anuncios ────────────────────────────────────────────────
-// Obtiene todos los anuncios disponibles
 export const getAnuncios = async (filtros = {}, page = 0) => {
   const params = new URLSearchParams();
   if (filtros.nombre) params.append("nombre", filtros.nombre);
@@ -28,8 +24,6 @@ export const getAnuncios = async (filtros = {}, page = 0) => {
   return await response.json();
 };
 
-// ─── GET /anuncio/:id ─────────────────────────────────────────────
-// Obtiene un único anuncio por su ID
 export const getAnuncio = async (id) => {
   const response = await fetch(`${BASE}/anuncio/${id}`, {
     method: "GET",
@@ -42,8 +36,6 @@ export const getAnuncio = async (id) => {
   return await response.json();
 };
 
-// ─── GET /anuncio/:id/imagenes ────────────────────────────────────
-// Obtiene las imágenes de un anuncio
 export const getImagenesAnuncio = async (id) => {
   const response = await fetch(`${BASE}/anuncio/${id}/imagenes`, {
     method: "GET",
@@ -56,13 +48,11 @@ export const getImagenesAnuncio = async (id) => {
   return await response.json();
 };
 
-// ─── POST /anuncio ────────────────────────────────────────────────
-// Crea un nuevo anuncio. `anuncio` es un objeto con los campos del modelo
 export const createAnuncio = async (anuncio, files, imagenPrincipal) => {
   const formData = new FormData();
   formData.append("data", new Blob([JSON.stringify(anuncio)], { type: "application/json" }));
   files.forEach(file => formData.append("files", file));
-  formData.append("principal", String(imagenPrincipal)); // ← nuevo
+  formData.append("principal", String(imagenPrincipal));
 
   const response = await fetch(`${BASE}/anuncio`, {
     method: "POST",
@@ -70,12 +60,16 @@ export const createAnuncio = async (anuncio, files, imagenPrincipal) => {
     body: formData,
   });
 
+  if (response.status === 401) {
+    localStorage.removeItem("token");
+    localStorage.removeItem("usuario");
+    window.location.href = "/login";
+    throw new Error("Tu sesión ha caducado. Vuelve a iniciar sesión.");
+  }
   if (!response.ok) throw new Error("Error al crear el anuncio");
   return await response.json();
 };
 
-// ─── PUT /anuncio/:id ─────────────────────────────────────────────
-// Edita un anuncio existente. Enviamos el objeto completo actualizado
 export const updateAnuncio = async (id, anuncio) => {
   const response = await fetch(`${BASE}/anuncio/${id}`, {
     method: "PUT",
@@ -89,8 +83,6 @@ export const updateAnuncio = async (id, anuncio) => {
   return await response.json();
 };
 
-// ─── DELETE /anuncio/:id ──────────────────────────────────────────
-// Elimina un anuncio por su ID. El backend devuelve 204 (sin contenido)
 export const deleteAnuncio = async (id) => {
   const response = await fetch(`${BASE}/anuncio/${id}`, {
     method: "DELETE",
@@ -100,11 +92,9 @@ export const deleteAnuncio = async (id) => {
   if (response.status === 404) return false;
   if (!response.ok) throw new Error(`Error al borrar el anuncio ${id}`);
 
-  // 204 No Content → éxito, devolvemos true para confirmarlo
   return true;
 };
 
-// ─── DELETE /anuncio/:id/imagenes/:imagenId ───────────────────────
 export const deleteImagenAnuncio = async (anuncioId, imagenId) => {
   const response = await fetch(`${BASE}/anuncio/${anuncioId}/imagenes/${imagenId}`, {
     method: "DELETE",
@@ -114,7 +104,6 @@ export const deleteImagenAnuncio = async (anuncioId, imagenId) => {
   return true;
 };
 
-// ─── PUT /anuncio/:id/imagenes ────────────────────────────────────
 export const addImagenesAnuncio = async (anuncioId, files, indicePrincipal = -1) => {
   const formData = new FormData();
   files.forEach(file => formData.append("files", file));
@@ -129,7 +118,6 @@ export const addImagenesAnuncio = async (anuncioId, files, indicePrincipal = -1)
   return await response.json();
 };
 
-// ─── PUT /anuncio/:id/imagenes/:imagenId/principal ────────────────
 export const setPrincipalAnuncio = async (anuncioId, imagenId) => {
   const response = await fetch(`${BASE}/anuncio/${anuncioId}/imagenes/${imagenId}/principal`, {
     method: "PUT",
@@ -139,8 +127,6 @@ export const setPrincipalAnuncio = async (anuncioId, imagenId) => {
   return await response.json();
 };
 
-// ─── GET /anuncios/mios ───────────────────────────────────────────
-// Obtiene los anuncios del usuario conectado
 export const getMisAnuncios = async () => {
   const response = await fetch(`${BASE}/anuncios/mios`, {
     method: "GET",

@@ -7,7 +7,7 @@ export default function Footer() {
     <footer className="bg-marino-700 mt-auto">
       <div className="max-w-5xl mx-auto px-6 py-4">
 
-        {/* tres columnas compactas */}
+        {/* tres columnas */}
         <div className="grid grid-cols-[1fr_0.8fr_1.4fr] gap-4 mb-3">
 
           {/* comunidad */}

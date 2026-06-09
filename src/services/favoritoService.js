@@ -1,11 +1,8 @@
 const BASE = import.meta.env.VITE_APP_BACKEND;
 import { getToken } from "./usuarioService";
 
-// añade el token JWT a las peticiones protegidas
 const authHeader = () => ({ "Authorization": `Bearer ${getToken()}` });
 
-// ─── GET /favorito/:anuncioId ─────────────────────────────────────
-// Comprueba si un anuncio es favorito del usuario conectado
 export const esFavoritoAnuncio = async (anuncioId) => {
   const response = await fetch(`${BASE}/favorito/${anuncioId}`, {
     method: "GET",
@@ -18,8 +15,6 @@ export const esFavoritoAnuncio = async (anuncioId) => {
   return data.esFavorito;
 };
 
-// ─── GET /favoritos ───────────────────────────────────────────────
-// Obtiene todos los favoritos del usuario conectado
 export const getMisFavoritos = async () => {
   const response = await fetch(`${BASE}/favoritos`, {
     method: "GET",
@@ -32,8 +27,6 @@ export const getMisFavoritos = async () => {
   return await response.json();
 };
 
-// ─── POST /favorito/:anuncioId ────────────────────────────────────
-// Añade un anuncio a favoritos
 export const addFavorito = async (anuncioId) => {
   const response = await fetch(`${BASE}/favorito/${anuncioId}`, {
     method: "POST",
@@ -44,8 +37,6 @@ export const addFavorito = async (anuncioId) => {
   return true;
 };
 
-// ─── DELETE /favorito/:anuncioId ──────────────────────────────────
-// Quita un anuncio de favoritos
 export const removeFavorito = async (anuncioId) => {
   const response = await fetch(`${BASE}/favorito/${anuncioId}`, {
     method: "DELETE",

@@ -6,7 +6,6 @@ import Footer from "../components/Footer";
 export default function Sobre() {
     const { hash } = useLocation();
 
-    // al cargar, si hay ancla (#que-es, #proyecto, etc.) hace scroll hasta ella
     useEffect(() => {
         if (hash) {
             const el = document.querySelector(hash);

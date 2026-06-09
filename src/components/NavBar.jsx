@@ -179,7 +179,6 @@ export default function NavBar() {
                 </div>
 
                 {/* móvil y tablet */}
-                {/* móvil y tablet */}
                 <div className="flex lg:hidden items-center justify-between py-2">
                     <button
                         onClick={() => navigate("/")}
