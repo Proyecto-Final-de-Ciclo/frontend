@@ -190,7 +190,7 @@ export default function DetalleAnuncio() {
                     : `${MONEDAS.find(m => m.codigo === moneda)?.simbolo}${cargando ? "..." : convertir(anuncio.precio)}`
                   }
                 </p>
-                {(!usuario || anuncio.usuario?.id !== usuario.id) && (
+                {(!usuario || (anuncio.usuario?.id !== usuario.id && usuario.rol !== "ROLE_ADMIN")) && (
                   <button
                     onClick={handleFavorito}
                     disabled={cargandoFav}
