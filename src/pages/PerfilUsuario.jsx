@@ -110,7 +110,7 @@ export default function PerfilUsuario() {
         }
     };
 
-    const puedeReseñar = usuario && usuario.id !== Number(id);
+    const puedeReseñar = usuario && usuario.id !== Number(id) && usuario.rol !== "ROLE_ADMIN";
 
     if (cargando) return (
         <div className="min-h-screen bg-transparent flex flex-col items-center justify-center text-gray-400">
@@ -372,7 +372,7 @@ export default function PerfilUsuario() {
                                         </div>
                                         <div className="flex items-center gap-3">
                                             <Estrellas puntuacion={reseña.puntuacion} />
-                                            {usuario?.id === reseña.autor.id && (
+                                            {(usuario?.id === reseña.autor.id || usuario?.rol === "ROLE_ADMIN") && (
                                                 <button
                                                     onClick={() => handleBorrarReseña(reseña.id)}
                                                     className="text-xs text-red-400 hover:text-red-600 transition-colors"
