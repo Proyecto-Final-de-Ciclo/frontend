@@ -7,6 +7,7 @@ import { esFavoritoAnuncio, addFavorito, removeFavorito } from "../services/favo
 import { Star } from "lucide-react";
 import BotonVolver from "../components/BotonVolver";
 import Footer from "../components/Footer"
+import { useMoneda, MONEDAS } from "../context/MonedaContext";
 
 export default function DetalleAnuncio() {
 
@@ -23,6 +24,8 @@ export default function DetalleAnuncio() {
   const [favorito, setFavorito] = useState(false);
   const [cargandoFav, setCargandoFav] = useState(false);
   const [indiceImagen, setIndiceImagen] = useState(0);
+
+  const { moneda, convertir, cargando } = useMoneda();
 
   const puedeBorrar = usuario && anuncio && (
     usuario.rol === "ROLE_ADMIN" ||
@@ -182,7 +185,10 @@ export default function DetalleAnuncio() {
               <h2 className="text-2xl font-bold text-gray-800">{anuncio.nombre}</h2>
               <div className="flex items-center gap-3">
                 <p className="text-2xl font-bold text-naranja-600">
-                  {Number(anuncio.precio).toFixed(2)} €
+                  {moneda === "EUR"
+                    ? `${convertir(anuncio.precio)} €`
+                    : `${MONEDAS.find(m => m.codigo === moneda)?.simbolo}${cargando ? "..." : convertir(anuncio.precio)}`
+                  }
                 </p>
                 {(!usuario || anuncio.usuario?.id !== usuario.id) && (
                   <button

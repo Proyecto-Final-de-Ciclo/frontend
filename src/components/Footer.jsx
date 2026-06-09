@@ -44,7 +44,7 @@ export default function Footer() {
           {/* sobre */}
           <div className="text-center">
             <p className="text-white/25 text-[10px] uppercase tracking-widest font-medium">
-              Sobre RadioOferta
+              Sobre RadiOferta
             </p>
             <div className="flex gap-2 mt-1 flex-wrap items-center justify-center">
               <button onClick={() => navigate("/sobre#que-es")}

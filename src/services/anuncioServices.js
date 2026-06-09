@@ -10,10 +10,11 @@ const authHeader = () => ({ "Authorization": `Bearer ${getToken()}` });
 export const getAnuncios = async (filtros = {}, page = 0) => {
   const params = new URLSearchParams();
   if (filtros.nombre) params.append("nombre", filtros.nombre);
-  if (filtros.categoria) params.append("categoria", filtros.categoria);
+  if (filtros.categoria) params.append("categoriaId", filtros.categoria);
   if (filtros.estado) params.append("estado", filtros.estado);
   if (filtros.precioMin) params.append("precioMin", filtros.precioMin);
   if (filtros.precioMax) params.append("precioMax", filtros.precioMax);
+  if (filtros.orden) params.append("orden", filtros.orden);
   params.append("page", page);
 
   const token = getToken();

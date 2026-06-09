@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUsuario } from "../context/UsuarioContext";
 import NavBar from "../components/NavBar";
-import { editarPerfil } from "../services/usuarioService";
+import { editarPerfil, cambiarPassword } from "../services/usuarioService";
 import Footer from "../components/Footer"
 
 export default function Perfil() {
@@ -84,7 +84,7 @@ export default function Perfil() {
     }
     setGuardandoPassword(true);
     try {
-      await editarPerfil({ ...form, password: formPassword.nueva, passwordActual: formPassword.actual });
+      await cambiarPassword(formPassword.actual, formPassword.nueva);
       setFormPassword({ actual: "", nueva: "", repetir: "" });
       setExito(true);
     } catch (e) {
@@ -324,10 +324,14 @@ export default function Perfil() {
                     value={form.descripcion}
                     onChange={(e) => set("descripcion", e.target.value)}
                     rows={3}
-                    maxLength={300}
+                    maxLength={255}
                     placeholder="Preséntate como vendedor..."
                     className={`${estiloInput} resize-none`}
                   />
+                  {/* contador de caracteres */}
+                  <p className="text-xs text-gray-400 mt-1 text-right">
+                    {form.descripcion.length}/255
+                  </p>
                 </Campo>
               </div>
             </div>
@@ -457,9 +461,14 @@ export default function Perfil() {
                     value={form.descripcionRadio}
                     onChange={(e) => set("descripcionRadio", e.target.value)}
                     rows={3}
+                    maxLength={255}
                     placeholder="Cuéntanos sobre tu actividad en radio..."
                     className={`${estiloInput} resize-none`}
                   />
+                  {/* contador de caracteres */}
+                  <p className="text-xs text-gray-400 mt-1 text-right">
+                    {form.descripcionRadio.length}/255
+                  </p>
                 </Campo>
               </div>
             </div>

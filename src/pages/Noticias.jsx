@@ -1,18 +1,14 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { getNoticias } from "../services/noticiaService";
-import { useUsuario } from "../context/UsuarioContext";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer"
 
 export default function Noticias() {
-    const navigate = useNavigate();
 
     const [noticias, setNoticias] = useState([]);
     const [cargando, setCargando] = useState(true);
     const [error, setError] = useState(null);
     const [noticiaActiva, setNoticiaActiva] = useState(null);
-    const { usuario } = useUsuario();
 
     useEffect(() => {
         const cargar = async () => {

@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getUsuarioPublico, getAnunciosUsuario, editarPerfil } from "../services/usuarioService";
+import { getUsuarioPublico, getAnunciosUsuario } from "../services/usuarioService";
 import { useUsuario } from "../context/UsuarioContext";
 import { deleteAnuncio } from "../services/anuncioServices";
 import AnuncioCard from "../components/AnuncioCard";
-import { User, Calendar, Tag, Star } from "lucide-react";
+import { User, Calendar, Tag, Star, Radio, Signal, Mail } from "lucide-react";
 import { getReseñas, crearReseña, borrarReseña } from "../services/reseñaService";
 import BotonVolver from "../components/BotonVolver";
 import Footer from "../components/Footer"
@@ -64,15 +64,6 @@ export default function PerfilUsuario() {
     const [panelAbierto, setPanelAbierto] = useState(false);
 
     const esPropietario = usuario && usuario.id === Number(id);
-    const [editandoPerfil, setEditandoPerfil] = useState(false);
-    const [formPerfil, setFormPerfil] = useState({
-        descripcion: "",
-        indicativo: "",
-        localizacion: "",
-        mostrarEmail: false,
-    });
-    const [guardando, setGuardando] = useState(false);
-    const [errorPerfil, setErrorPerfil] = useState(null);
 
     useEffect(() => {
         const cargar = async () => {
@@ -83,12 +74,6 @@ export default function PerfilUsuario() {
                     getReseñas(id)
                 ]);
                 setPerfil(datosPerfil);
-                setFormPerfil({
-                    descripcion: datosPerfil.descripcion || "",
-                    indicativo: datosPerfil.indicativo || "",
-                    localizacion: datosPerfil.localizacion || "",
-                    mostrarEmail: datosPerfil.email !== null && datosPerfil.email !== undefined,
-                });
                 setAnuncios(datosAnuncios);
                 setReseñas(datosReseñas);
             } catch {
@@ -122,20 +107,6 @@ export default function PerfilUsuario() {
             } catch {
                 alert("Error al borrar la reseña");
             }
-        }
-    };
-
-    const handleGuardarPerfil = async () => {
-        setGuardando(true);
-        setErrorPerfil(null);
-        try {
-            const actualizado = await editarPerfil(formPerfil);
-            setPerfil(actualizado);
-            setEditandoPerfil(false);
-        } catch (e) {
-            setErrorPerfil(e.message);
-        } finally {
-            setGuardando(false);
         }
     };
 
@@ -222,62 +193,17 @@ export default function PerfilUsuario() {
                             <p className="text-sm text-gray-500">✉️ {perfil.email}</p>
                         )}
                         {perfil.descripcion && (
-                            <p className="text-sm text-gray-600 mt-2 italic">{perfil.descripcion}</p>
+                            <p className="text-sm text-gray-600 mt-2 italic break-words">{perfil.descripcion}</p>
                         )}
 
                         {/* botón editar, solo visible para el propietario */}
                         {esPropietario && (
                             <button
-                                onClick={() => setEditandoPerfil(prev => !prev)}
+                                onClick={() => navigate("/perfil")}
                                 className="mt-3 bg-naranja-500 hover:bg-naranja-600 text-white font-semibold px-3 py-1.5 rounded-lg text-xs transition-colors"
                             >
-                                {editandoPerfil ? "Cancelar" : "Editar perfil"}
+                                Editar perfil
                             </button>
-                        )}
-
-                        {/* formulario de edición */}
-                        {esPropietario && editandoPerfil && (
-                            <div className="mt-4 flex flex-col gap-3 w-full max-w-md">
-                                <input
-                                    type="text"
-                                    placeholder="Indicativo (ej: EA1ABC)"
-                                    value={formPerfil.indicativo}
-                                    onChange={(e) => setFormPerfil(prev => ({ ...prev, indicativo: e.target.value }))}
-                                    className="border border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-naranja-500"
-                                />
-                                <input
-                                    type="text"
-                                    placeholder="Localización (ej: Madrid)"
-                                    value={formPerfil.localizacion}
-                                    onChange={(e) => setFormPerfil(prev => ({ ...prev, localizacion: e.target.value }))}
-                                    className="border border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-naranja-500"
-                                />
-                                <textarea
-                                    placeholder="Descripción..."
-                                    value={formPerfil.descripcion}
-                                    onChange={(e) => setFormPerfil(prev => ({ ...prev, descripcion: e.target.value }))}
-                                    rows={3}
-                                    maxLength={300}
-                                    className="border border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-naranja-500 resize-none"
-                                />
-                                <label className="flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
-                                    <input
-                                        type="checkbox"
-                                        checked={formPerfil.mostrarEmail}
-                                        onChange={(e) => setFormPerfil(prev => ({ ...prev, mostrarEmail: e.target.checked }))}
-                                        className="accent-naranja-500"
-                                    />
-                                    Mostrar mi email públicamente
-                                </label>
-                                {errorPerfil && <p className="text-xs text-red-400">{errorPerfil}</p>}
-                                <button
-                                    onClick={handleGuardarPerfil}
-                                    disabled={guardando}
-                                    className="bg-naranja-500 hover:bg-naranja-600 text-white font-semibold px-5 py-2 rounded-xl text-sm transition-colors disabled:opacity-50"
-                                >
-                                    {guardando ? "Guardando..." : "Guardar cambios"}
-                                </button>
-                            </div>
                         )}
                     </div>
                 </div>
@@ -286,29 +212,52 @@ export default function PerfilUsuario() {
                 {(perfil.modos || perfil.qslBuro || perfil.descripcionRadio ||
                     (perfil.mostrarActivoDesde && perfil.activoDesde)) && (
                         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6">
-                            <h3 className="text-lg font-semibold text-gray-700 mb-4">
+                            <h3 className="text-lg font-semibold text-gray-700 mb-5 flex items-center gap-2">
+                                <Radio className="w-5 h-5 text-naranja-500" />
                                 Datos de radioaficionado
                             </h3>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+
+                            {/* tarjetas de datos */}
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                                 {perfil.mostrarActivoDesde && perfil.activoDesde && (
-                                    <p className="text-gray-600">
-                                        <span className="font-medium text-gray-500">Activo desde:</span> {perfil.activoDesde}
-                                    </p>
+                                    <div className="flex items-center gap-3 bg-gray-50 rounded-xl p-3">
+                                        <div className="w-9 h-9 rounded-lg bg-naranja-100 flex items-center justify-center shrink-0">
+                                            <Calendar className="w-4 h-4 text-naranja-600" />
+                                        </div>
+                                        <div>
+                                            <p className="text-xs text-gray-400 uppercase tracking-wide">Activo desde</p>
+                                            <p className="text-sm font-medium text-gray-700">{perfil.activoDesde}</p>
+                                        </div>
+                                    </div>
                                 )}
                                 {perfil.modos && (
-                                    <p className="text-gray-600">
-                                        <span className="font-medium text-gray-500">Modos:</span> {perfil.modos}
-                                    </p>
+                                    <div className="flex items-center gap-3 bg-gray-50 rounded-xl p-3">
+                                        <div className="w-9 h-9 rounded-lg bg-naranja-100 flex items-center justify-center shrink-0">
+                                            <Signal className="w-4 h-4 text-naranja-600" />
+                                        </div>
+                                        <div>
+                                            <p className="text-xs text-gray-400 uppercase tracking-wide">Modos</p>
+                                            <p className="text-sm font-medium text-gray-700">{perfil.modos}</p>
+                                        </div>
+                                    </div>
                                 )}
-                                <p className="text-gray-600">
-                                    <span className="font-medium text-gray-500">QSL por buró:</span> {perfil.qslBuro ? "Sí" : "No"}
-                                </p>
-                                {perfil.descripcionRadio && (
-                                    <p className="text-gray-600 sm:col-span-2 italic">
-                                        {perfil.descripcionRadio}
-                                    </p>
-                                )}
+                                <div className="flex items-center gap-3 bg-gray-50 rounded-xl p-3">
+                                    <div className="w-9 h-9 rounded-lg bg-naranja-100 flex items-center justify-center shrink-0">
+                                        <Mail className="w-4 h-4 text-naranja-600" />
+                                    </div>
+                                    <div>
+                                        <p className="text-xs text-gray-400 uppercase tracking-wide">QSL por buró</p>
+                                        <p className="text-sm font-medium text-gray-700">{perfil.qslBuro ? "Sí" : "No"}</p>
+                                    </div>
+                                </div>
                             </div>
+
+                            {/* descripción */}
+                            {perfil.descripcionRadio && (
+                                <p className="text-sm text-gray-600 italic break-words mt-4 pt-4 border-t border-gray-100">
+                                    {perfil.descripcionRadio}
+                                </p>
+                            )}
                         </div>
                     )}
 

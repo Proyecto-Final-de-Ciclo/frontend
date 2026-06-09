@@ -118,3 +118,14 @@ export const editarPerfil = async (datos) => {
   if (!response.ok) throw new Error("Error al editar el perfil");
   return await response.json();
 };
+
+export const cambiarPassword = async (passwordActual, passwordNueva) => {
+  const response = await fetch(`${BASE}/usuario/password`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json", ...authHeader() },
+    body: JSON.stringify({ passwordActual, passwordNueva }),
+  });
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.message || "Error al cambiar la contraseña");
+  return data;
+};

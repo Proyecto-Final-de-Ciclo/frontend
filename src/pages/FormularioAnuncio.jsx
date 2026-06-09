@@ -386,7 +386,7 @@ export default function FormularioAnuncio() {
                 name="categoriaId"
                 value={form.categoriaId}
                 onChange={handleChange}
-                style={{ color: form.estado === "" ? "#9ca3af" : "inherit" }}
+                style={{ color: form.categoriaId === "" ? "#9ca3af" : "inherit" }}
                 className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-naranja-500"
               >
                 <option value="">Selecciona una categoría</option>

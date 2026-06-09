@@ -37,8 +37,7 @@ export default function ListaAnuncios() {
     setError(null);
     try {
       const data = await getAnuncios(filtrosActivos, pagina);
-      const ordenados = ordenarAnuncios(data.content, filtrosActivos.orden);
-      setAnuncios(ordenados);
+      setAnuncios(data.content);
       setTotalPaginas(data.totalPages);
       setTotalAnuncios(data.totalElements);
       setPaginaActual(data.number);
@@ -89,16 +88,6 @@ export default function ListaAnuncios() {
     filtros.precioMin !== "" ||
     filtros.precioMax !== "" ||
     filtros.orden !== "";
-
-  const ordenarAnuncios = (lista, orden) => {
-    if (!orden) return lista;
-    const copia = [...lista];
-    if (orden === "precio_asc") return copia.sort((a, b) => a.precio - b.precio);
-    if (orden === "precio_desc") return copia.sort((a, b) => b.precio - a.precio);
-    if (orden === "fecha_reciente") return copia.sort((a, b) => new Date(b.fechaPublicacion) - new Date(a.fechaPublicacion));
-    if (orden === "fecha_antigua") return copia.sort((a, b) => new Date(a.fechaPublicacion) - new Date(b.fechaPublicacion));
-    return copia;
-  };
 
   const buscarUsuarios = async (texto) => {
     if (!texto.trim()) {
@@ -206,7 +195,7 @@ export default function ListaAnuncios() {
             <div className="relative flex-1">
               <input
                 type="text"
-                placeholder="Buscar vendedor..."
+                placeholder="Buscar vendedor / usuario..."
                 value={busquedaUsuario}
                 onChange={(e) => {
                   setBusquedaUsuario(e.target.value);

@@ -53,6 +53,8 @@ export default function NavBar() {
         return localStorage.getItem("tema") || "claro";
     });
 
+
+    // cambiar tema (claro/osucro)
     useEffect(() => {
         if (tema === "oscuro") {
             document.documentElement.classList.add("dark");
@@ -90,6 +92,8 @@ export default function NavBar() {
                                 {e.texto}
                             </button>
                         ))}
+
+                        {/* ?. --> si el usuario es null no peta, devuelve undefined */}
                         {usuario?.rol === "ROLE_ADMIN" && enlacesAdmin.map(e => (
                             <button key={e.ruta} onClick={() => navigate(e.ruta)} className={activa(e.ruta)}>
                                 {e.texto}
@@ -99,6 +103,8 @@ export default function NavBar() {
 
                     {/* usuario */}
                     <div className="flex-1 flex items-center justify-end gap-2 pb-2">
+
+                        {/* cambiar tema */}
                         <button
                             onClick={toggleTema}
                             className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
@@ -106,6 +112,8 @@ export default function NavBar() {
                         >
                             {tema === "claro" ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
                         </button>
+
+                        {/* menú usuario */}
                         {usuario ? (
                             <div className="relative menu-usuario">
                                 <button

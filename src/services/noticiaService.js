@@ -1,6 +1,8 @@
 // Proxy CORS gratuito que convierte RSS a JSON
 const RSS2JSON = "https://api.rss2json.com/v1/api.json?rss_url=";
 
+const BASE = import.meta.env.VITE_APP_BACKEND;
+
 // Los mismos feeds y fuentes que tenías en el backend
 const FEEDS = [
   { url: "https://www.ure.es/feed", fuente: "URE" },
@@ -8,7 +10,15 @@ const FEEDS = [
   { url: "https://selvamarnoticias.com/feed", fuente: "Selvamar Noticias" },
 ];
 
-export const getNoticias = async () => {
+// DESARROLLO: lee las noticias desde el backend (RomeTools)
+const getNoticiasBackend = async () => {
+  const response = await fetch(`${BASE}/noticias`);
+  if (response.status === 404) return [];
+  if (!response.ok) throw new Error("Error al obtener las noticias");
+  return await response.json();
+};
+
+const getNoticiasFrontend = async () => {
   const haceUnMes = new Date();
   haceUnMes.setDate(haceUnMes.getDate() - 30);
 
@@ -58,3 +68,8 @@ function limpiarHtml(html) {
     .replace(/\s+/g, " ")
     .trim();
 }
+
+// En desarrollo usamos el backend (RomeTools); en producción, el frontend (rss2json)
+export const getNoticias = async () => {
+  return import.meta.env.DEV ? getNoticiasBackend() : getNoticiasFrontend();
+};
